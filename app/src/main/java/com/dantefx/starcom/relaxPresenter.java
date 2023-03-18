@@ -9,11 +9,12 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
-import com.dantefx.starcom.databinding.FragmentFirstBinding;
+import com.dantefx.starcom.databinding.RelaxViewBinding;
 
-public class FirstFragment extends Fragment {
+public class relaxPresenter extends Fragment {
 
-    private FragmentFirstBinding binding;
+    private RelaxViewBinding binding;
+    ToneGenerator toneGenerator = new ToneGenerator();
 
     @Override
     public View onCreateView(
@@ -21,7 +22,7 @@ public class FirstFragment extends Fragment {
             Bundle savedInstanceState
     ) {
 
-        binding = FragmentFirstBinding.inflate(inflater, container, false);
+        binding = RelaxViewBinding.inflate(inflater, container, false);
         return binding.getRoot();
 
     }
@@ -32,8 +33,19 @@ public class FirstFragment extends Fragment {
         binding.buttonFirst.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                NavHostFragment.findNavController(FirstFragment.this)
+                NavHostFragment.findNavController(relaxPresenter.this)
                         .navigate(R.id.action_FirstFragment_to_SecondFragment);
+            }
+        });
+        binding.buttonFirst2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+            }
+        });
+        binding.buttonFirst3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
             }
         });
     }
