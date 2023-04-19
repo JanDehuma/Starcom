@@ -3,26 +3,38 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/FirstFragment">
+    app:startDestination="@id/relaxModeP">
 
     <fragment
-        android:id="@+id/FirstFragment"
-        android:name="com.dantefx.starcom.relaxPresenter"
+        android:id="@+id/relaxModeP"
+        android:name="com.dantefx.starcom.relaxModePresenter"
         android:label="@string/first_fragment_label"
-        tools:layout="@layout/relax_view">
+        tools:layout="@layout/relaxmode_view">
 
         <action
-            android:id="@+id/action_FirstFragment_to_SecondFragment"
-            app:destination="@id/SecondFragment" />
+            android:id="@+id/relaxModeToSleep"
+            app:destination="@id/sleepMode" />
+        <action
+            android:id="@+id/relaxModeToRelax"
+            app:destination="@id/relaxMode" />
+        <action
+            android:id="@+id/relaxModeToConcentrate"
+            app:destination="@id/concentrateMode" />
     </fragment>
     <fragment
-        android:id="@+id/SecondFragment"
+        android:id="@+id/sleepMode"
         android:name="com.dantefx.starcom.sleepPresenter"
-        android:label="@string/second_fragment_label"
-        tools:layout="@layout/sleep_view">
-
-        <action
-            android:id="@+id/action_SecondFragment_to_FirstFragment"
-            app:destination="@id/FirstFragment" />
+        android:label="@string/label_sleep"
+        tools:layout="@layout/sleep_view"/>
+    <fragment
+        android:id="@+id/relaxMode"
+        android:name="com.dantefx.starcom.relaxPresenter"
+        android:label="@string/label_Relax"
+        tools:layout="@layout/relax_view"/>
+    <fragment
+        android:id="@+id/concentrateMode"
+        android:name="com.dantefx.starcom.concentratePresenter"
+        android:label="@string/label_Concentrate"
+        tools:layout="@layout/concentrate_view">
     </fragment>
 </navigation>

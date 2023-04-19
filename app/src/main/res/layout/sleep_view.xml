@@ -10,7 +10,7 @@
         android:id="@+id/textview_second"
         android:layout_width="238dp"
         android:layout_height="142dp"
-        android:text="Usa tus audifonos y relajate..."
+        android:text="No uses audifonos para dormir..."
         android:textAlignment="center"
         android:textSize="24sp"
         app:layout_constraintBottom_toTopOf="@id/button_second"

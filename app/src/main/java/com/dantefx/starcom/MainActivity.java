@@ -22,7 +22,6 @@ public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration appBarConfiguration;
     private ActivityMainBinding binding;
-    ToneGenerator tg = new ToneGenerator();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

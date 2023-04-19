@@ -1,9 +1,11 @@
 <resources>
-    <string name="app_name">Starcom</string>
+    <string name="app_name">Sleepy Tasks</string>
     <string name="action_settings">Settings</string>
     <!-- Strings used for fragments for navigation -->
-    <string name="first_fragment_label">Relax</string>
-    <string name="second_fragment_label">Dormir</string>
+    <string name="first_fragment_label">Modo Relajación</string>
+    <string name="label_sleep">Dormir</string>
+    <string name="label_Relax">Relax</string>
+    <string name="label_Concentrate">Concentrar</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
 

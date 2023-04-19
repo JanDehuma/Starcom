@@ -56,7 +56,7 @@ public class sleepPresenter extends Fragment {
             binding.buttonSecond.setImageResource(android.R.drawable.ic_media_play);
         }else{
 
-            tg.playPulse(98,2,10000);
+            tg.playPulse(98,2,40000);
             binding.buttonSecond.setImageResource(android.R.drawable.ic_media_pause);
         }
     }

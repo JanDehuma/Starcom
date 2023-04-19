@@ -9,11 +9,11 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
-import com.dantefx.starcom.databinding.RelaxViewBinding;
+import com.dantefx.starcom.databinding.RelaxmodeViewBinding;
 
-public class relaxPresenter extends Fragment {
+public class relaxModePresenter extends Fragment {
 
-    private RelaxViewBinding binding;
+    private RelaxmodeViewBinding binding;
     ToneGenerator toneGenerator = new ToneGenerator();
 
     @Override
@@ -22,7 +22,7 @@ public class relaxPresenter extends Fragment {
             Bundle savedInstanceState
     ) {
 
-        binding = RelaxViewBinding.inflate(inflater, container, false);
+        binding = RelaxmodeViewBinding.inflate(inflater, container, false);
         return binding.getRoot();
 
     }
@@ -30,22 +30,25 @@ public class relaxPresenter extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        binding.buttonFirst.setOnClickListener(new View.OnClickListener() {
+        binding.sleepButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                NavHostFragment.findNavController(relaxPresenter.this)
-                        .navigate(R.id.action_FirstFragment_to_SecondFragment);
+                NavHostFragment.findNavController(relaxModePresenter.this)
+                        .navigate(R.id.relaxModeToSleep);
             }
         });
-        binding.buttonFirst2.setOnClickListener(new View.OnClickListener() {
+        binding.relaxButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                NavHostFragment.findNavController(relaxModePresenter.this)
+                        .navigate(R.id.relaxModeToRelax);
             }
         });
-        binding.buttonFirst3.setOnClickListener(new View.OnClickListener() {
+        binding.studyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                NavHostFragment.findNavController(relaxModePresenter.this)
+                        .navigate(R.id.relaxModeToConcentrate);
             }
         });
     }

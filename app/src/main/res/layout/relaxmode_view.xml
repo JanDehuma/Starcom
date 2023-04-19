@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".relaxPresenter">
+    tools:context=".relaxModePresenter">
 
 
     <TextView
@@ -13,14 +13,14 @@
         android:layout_height="wrap_content"
         android:text="@string/relaxText"
         android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@id/button_first"
+        app:layout_constraintBottom_toTopOf="@id/sleepButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.291" />
 
     <ImageButton
-        android:id="@+id/button_first"
+        android:id="@+id/sleepButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="384dp"
@@ -33,7 +33,7 @@
         tools:src="@drawable/sleep" />
 
     <ImageButton
-        android:id="@+id/button_first2"
+        android:id="@+id/studyButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="56dp"
@@ -45,7 +45,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <ImageButton
-        android:id="@+id/button_first3"
+        android:id="@+id/relaxButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="220dp"
