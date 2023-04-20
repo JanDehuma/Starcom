@@ -1,0 +1,44 @@
+package com.dantefx.starcom.db;
+
+import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
+
+import androidx.annotation.Nullable;
+
+public class DBHelper extends SQLiteOpenHelper {
+
+    private static final int DATABASE_VERSION = 1;
+    private static final String DATABASE_NOMBRE = "starcom.db";
+    public static final String TABLE_USUARIO = "USUARIO";
+    public static final String TABLE_TAREA = "TAREA";
+
+    public DBHelper(@Nullable Context context) {
+        super(context, DATABASE_NOMBRE, null, DATABASE_VERSION);
+    }
+
+    @Override
+    public void onCreate(SQLiteDatabase db) {
+        db.execSQL("CREATE TABLE " + TABLE_USUARIO + "(" +
+                "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "nombre TEXT NOT NULL)");
+
+        db.execSQL("CREATE TABLE " + TABLE_TAREA + "(" +
+                "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "nombre TEXT NOT NULL," +
+                "descripcion TEXT NOT NULL," +
+                "estado BOOLEAN(1) NOT NULL," +
+                "fechaEntrega DATE NOT NULL," +
+                "prioridad TEXT NOT NULL," +
+                "idUsuario INTEGER," +
+                "FOREIGN KEY (idUsuario) REFERENCES TABLE_USUARIO(id))");
+    }
+
+    @Override
+    public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
+
+        sqLiteDatabase.execSQL("DROP TABLE " + TABLE_USUARIO );
+        sqLiteDatabase.execSQL("DROP TABLE " + TABLE_TAREA );
+        onCreate(sqLiteDatabase);
+    }
+}
