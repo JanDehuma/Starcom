@@ -7,14 +7,15 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.fragment.NavHostFragment;
 
 import com.dantefx.starcom.databinding.RelaxViewBinding;
+import com.dantefx.starcom.databinding.SleepViewBinding;
 
 public class relaxPresenter extends Fragment {
 
     private RelaxViewBinding binding;
-    ToneGenerator toneGenerator = new ToneGenerator();
+    ToneGenerator tg = new ToneGenerator();
+
 
     @Override
     public View onCreateView(
@@ -30,22 +31,11 @@ public class relaxPresenter extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        binding.buttonFirst.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                NavHostFragment.findNavController(relaxPresenter.this)
-                        .navigate(R.id.action_FirstFragment_to_SecondFragment);
-            }
-        });
-        binding.buttonFirst2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-            }
-        });
-        binding.buttonFirst3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        binding.buttonSecond.setOnClickListener(new View.OnClickListener() {
 
+            @Override
+            public void onClick(View view) {
+                isPlaying();
             }
         });
     }
@@ -54,6 +44,22 @@ public class relaxPresenter extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+    }
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
+
+
+    public void isPlaying(){
+        if (tg.isPlaying) {
+            tg.stopPulse();
+            binding.buttonSecond.setImageResource(android.R.drawable.ic_media_play);
+        }else{
+
+            tg.playPulse(138.59,4,40000);
+            binding.buttonSecond.setImageResource(android.R.drawable.ic_media_pause);
+        }
     }
 
 }

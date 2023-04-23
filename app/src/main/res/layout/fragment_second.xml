@@ -4,28 +4,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".sleepPresenter">
+    tools:context=".SecondFragment">
 
     <TextView
         android:id="@+id/textview_second"
-        android:layout_width="238dp"
-        android:layout_height="142dp"
-        android:text="No uses audifonos para dormir..."
-        android:textAlignment="center"
-        android:textSize="24sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         app:layout_constraintBottom_toTopOf="@id/button_second"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageButton
+    <Button
         android:id="@+id/button_second"
-        android:layout_width="163dp"
-        android:layout_height="114dp"
-        android:background="@null"
-        android:scaleX="3"
-        android:scaleY="3"
-        android:src="@android:drawable/ic_media_play"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/previous"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

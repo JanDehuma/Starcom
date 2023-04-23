@@ -8,11 +8,11 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-import com.dantefx.starcom.databinding.SleepViewBinding;
+import com.dantefx.starcom.databinding.ConcentrateViewBinding;
 
-public class sleepPresenter extends Fragment {
+public class concentratePresenter extends Fragment {
 
-    private SleepViewBinding binding;
+    private ConcentrateViewBinding binding;
     ToneGenerator tg = new ToneGenerator();
 
 
@@ -22,7 +22,7 @@ public class sleepPresenter extends Fragment {
             Bundle savedInstanceState
     ) {
 
-        binding = SleepViewBinding.inflate(inflater, container, false);
+        binding = ConcentrateViewBinding.inflate(inflater, container, false);
         return binding.getRoot();
 
     }
@@ -56,7 +56,7 @@ public class sleepPresenter extends Fragment {
             binding.buttonSecond.setImageResource(android.R.drawable.ic_media_play);
         }else{
 
-            tg.playPulse(98,2,40000);
+            tg.playPulse(123.47,23,40000);
             binding.buttonSecond.setImageResource(android.R.drawable.ic_media_pause);
         }
     }

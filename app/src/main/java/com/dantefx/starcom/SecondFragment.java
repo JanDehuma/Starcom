@@ -7,14 +7,13 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.fragment.NavHostFragment;
 
-import com.dantefx.starcom.databinding.SleepViewBinding;
+import com.dantefx.starcom.databinding.FragmentSecondBinding;
 
-public class sleepPresenter extends Fragment {
+public class SecondFragment extends Fragment {
 
-    private SleepViewBinding binding;
-    ToneGenerator tg = new ToneGenerator();
-
+    private FragmentSecondBinding binding;
 
     @Override
     public View onCreateView(
@@ -22,7 +21,7 @@ public class sleepPresenter extends Fragment {
             Bundle savedInstanceState
     ) {
 
-        binding = SleepViewBinding.inflate(inflater, container, false);
+        binding = FragmentSecondBinding.inflate(inflater, container, false);
         return binding.getRoot();
 
     }
@@ -31,10 +30,10 @@ public class sleepPresenter extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         binding.buttonSecond.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View view) {
-                isPlaying();
+                NavHostFragment.findNavController(SecondFragment.this)
+                        .navigate(R.id.action_SecondFragment_to_FirstFragment);
             }
         });
     }
@@ -43,22 +42,6 @@ public class sleepPresenter extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
-    }
-    @Override
-    public void onResume() {
-        super.onResume();
-    }
-
-
-    public void isPlaying(){
-        if (tg.isPlaying) {
-            tg.stopPulse();
-            binding.buttonSecond.setImageResource(android.R.drawable.ic_media_play);
-        }else{
-
-            tg.playPulse(98,2,40000);
-            binding.buttonSecond.setImageResource(android.R.drawable.ic_media_pause);
-        }
     }
 
 }

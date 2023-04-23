@@ -8,7 +8,7 @@ import android.media.AudioTrack;
 public class ToneGenerator {
     private AudioTrack audioTrack;
     public Boolean isPlaying = false;
-    public void playPulse(int crossFreq, int pulseFreq, final int duration) {
+    public void playPulse(double crossFreq, int pulseFreq, final int duration) {
         float volume1 = 0.5f;
         float volume2 = 0.3f;
         float chorusAmount = 0.8f;
@@ -26,9 +26,9 @@ public class ToneGenerator {
                 .setChannelMask(AudioFormat.CHANNEL_OUT_MONO)
                 .build();
 
-        short[] buffer1 = new short[numSamples];
-        short[] buffer2 = new short[numSamples];
-        short[] buffer3 = new short[numSamples];
+        int[] buffer1 = new int[numSamples];
+        int[] buffer2 = new int[numSamples];
+        int[] buffer3 = new int[numSamples];
 
         double angularFrequency1 = 2 * Math.PI * crossFreq / sampleRate;
         double angularFrequency2 = 2 * Math.PI * pulseFreq / sampleRate;
@@ -49,7 +49,7 @@ public class ToneGenerator {
             if (i < sampleRate / 50) {
                 buffer2[i] = buffer1[i];
             } else {
-                buffer2[i] = (short) ((buffer1[i] + buffer1[i - sampleRate / 50]) / 2);
+                buffer2[i] = (int) ((buffer1[i] + buffer1[i - sampleRate / 50]) / 2);
             }
         }
 
@@ -58,7 +58,7 @@ public class ToneGenerator {
             if (i < sampleRate / 25) {
                 buffer3[i] = buffer1[i];
             } else {
-                buffer3[i] = (short) ((buffer1[i] + buffer1[i - sampleRate / 25]) / 2);
+                buffer3[i] = (int) ((buffer1[i] + buffer1[i - sampleRate / 25]) / 2);
             }
         }
 
