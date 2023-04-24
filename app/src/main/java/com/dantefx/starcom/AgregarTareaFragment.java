@@ -7,6 +7,11 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.Spinner;
+
+import java.util.Locale;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -38,6 +43,8 @@ public class AgregarTareaFragment extends Fragment {
      */
     // TODO: Rename and change types and number of parameters
     public static AgregarTareaFragment newInstance(String param1, String param2) {
+
+
         AgregarTareaFragment fragment = new AgregarTareaFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
@@ -53,12 +60,28 @@ public class AgregarTareaFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        View view  =inflater.inflate(R.layout.fragment_agregar_tarea, container, false);
+        Spinner spinnerPriori = view.findViewById(R.id.idSpinner);
+        String[] prioridades = {
+                "Bajo",
+                "Medio",
+                "Alto"
+        };
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, prioridades);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerPriori.setAdapter(adapter);
+
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_agregar_tarea, container, false);
     }
+
+
 }

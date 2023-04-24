@@ -88,8 +88,8 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textColor="#FFFFFF"
         android:textSize="40sp"
-        tools:layout_editor_absoluteX="84dp"
-        tools:layout_editor_absoluteY="92dp" />
+        tools:layout_editor_absoluteX="144dp"
+        tools:layout_editor_absoluteY="16dp" />
 
     <ImageButton
         android:id="@+id/buttonAgregarTareas"
