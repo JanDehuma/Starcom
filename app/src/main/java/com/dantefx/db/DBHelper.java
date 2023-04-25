@@ -41,4 +41,7 @@ public class DBHelper extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL("DROP TABLE " + TABLE_TAREA );
         onCreate(sqLiteDatabase);
     }
+
+    public void insertarTarea(String titulo, String descripcion, String prioridad) {
+    }
 }
