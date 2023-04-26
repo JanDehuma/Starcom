@@ -1,6 +1,9 @@
 package com.dantefx.starcom;
 
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,23 +14,39 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 import android.widget.TextView;
+
+import java.util.ArrayList;
 import java.util.Date;
+
+import com.dantefx.db.DBHandler;
+import com.dantefx.db.DBHelper;
+import com.dantefx.db.DBTareas;
 import com.dantefx.starcom.databinding.FragmentTareasBinding;
 public class TareasFragment extends Fragment {
 
     private FragmentTareasBinding binding;
     ListView tareas;
-    String num[] = {"Tarea 1","Tarea 2","Tarea 3","Tarea 4", "Tarea 5"};
+    ArrayList<String> tareasList = new ArrayList<String>();
     @Override
     public View onCreateView(
             LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState
     ) {
+        DBHandler dbHelper = new DBHandler(this.getContext());
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
 
         binding = FragmentTareasBinding.inflate(inflater, container, false);
         tareas=binding.listTareasFirst;
 
-        ArrayAdapter adapter = new ArrayAdapter(this.getContext(), R.layout.row_first,num);
+        if (db != null) {
+            Cursor resultSet = db.rawQuery("Select * from tareas",null);
+            resultSet.moveToFirst();
+            for (int i = 0; i < resultSet.getCount(); i++) {
+                tareasList.add(resultSet.getString(1));
+            }
+        }
+
+        ArrayAdapter adapter = new ArrayAdapter(this.getContext(), R.layout.row_first,tareasList);
         tareas.setAdapter(adapter);
         TextView dateView = binding.fecha;
         setDate(dateView);
@@ -43,6 +62,13 @@ public class TareasFragment extends Fragment {
             public void onClick(View view) {
                 NavHostFragment.findNavController(TareasFragment.this)
                         .navigate(R.id.action_FirstFragment_to_SecondFragment);
+            }
+        });
+        binding.buttonAgregarTareas.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                NavHostFragment.findNavController(TareasFragment.this)
+                        .navigate(R.id.action_FirstFragment_to_agregarTareaFragment);
             }
         });
 

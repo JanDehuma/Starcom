@@ -25,8 +25,8 @@
 
     <ImageButton
         android:id="@+id/fab"
-        android:layout_width="127dp"
-        android:layout_height="141dp"
+        android:layout_width="110dp"
+        android:layout_height="110dp"
         android:layout_gravity="bottom|end"
         android:layout_marginEnd="@dimen/fab_margin"
         android:layout_marginBottom="16dp"

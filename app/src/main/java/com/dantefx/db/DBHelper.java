@@ -1,4 +1,4 @@
-package com.dantefx.starcom.db;
+package com.dantefx.db;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
@@ -28,10 +28,10 @@ public class DBHelper extends SQLiteOpenHelper {
                 "nombre TEXT NOT NULL," +
                 "descripcion TEXT NOT NULL," +
                 "estado BOOLEAN(1) NOT NULL," +
-                "fechaEntrega DATE NOT NULL," +
+                "fechaEntrega TEXT NOT NULL," +
                 "prioridad TEXT NOT NULL," +
-                "idUsuario INTEGER," +
-                "FOREIGN KEY (idUsuario) REFERENCES TABLE_USUARIO(id))");
+                "usuario TEXT," +
+                "FOREIGN KEY (usuario) REFERENCES TABLE_USUARIO(id))");
     }
 
     @Override
@@ -42,6 +42,8 @@ public class DBHelper extends SQLiteOpenHelper {
         onCreate(sqLiteDatabase);
     }
 
-    public void insertarTarea(String titulo, String descripcion, String prioridad) {
+    public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        onUpgrade(db, oldVersion, newVersion);
     }
+
 }
