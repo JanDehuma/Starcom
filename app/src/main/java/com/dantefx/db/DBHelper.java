@@ -1,6 +1,7 @@
 package com.dantefx.starcom.db;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -42,6 +43,18 @@ public class DBHelper extends SQLiteOpenHelper {
         onCreate(sqLiteDatabase);
     }
 
-    public void insertarTarea(String titulo, String descripcion, String prioridad) {
+
+
+    public Cursor obtenerTodasLasTareas() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String[] columnas = {
+                "id",
+                "nombre",
+                "descripcion",
+                "estado",
+                "fechaEntrega"
+        };
+        Cursor cursor = db.query(TABLE_TAREA, columnas, null, null, null, null, null);
+        return cursor;
     }
 }
