@@ -1,4 +1,4 @@
-package com.dantefx.starcom.db;
+package com.dantefx.db;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -7,6 +7,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.Nullable;
 
+import com.dantefx.starcom.AgregarTareaFragment;
+
 public class DBHelper extends SQLiteOpenHelper {
 
     private static final int DATABASE_VERSION = 1;
@@ -14,25 +16,23 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String TABLE_USUARIO = "USUARIO";
     public static final String TABLE_TAREA = "TAREA";
 
-    public DBHelper(@Nullable Context context) {
-        super(context, DATABASE_NOMBRE, null, DATABASE_VERSION);
+    public DBHelper(@Nullable AgregarTareaFragment context) {
+        super(context.getContext(), DATABASE_NOMBRE, null, DATABASE_VERSION);
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("CREATE TABLE " + TABLE_USUARIO + "(" +
-                "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "nombre TEXT NOT NULL)");
 
         db.execSQL("CREATE TABLE " + TABLE_TAREA + "(" +
-                "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "nombre TEXT NOT NULL," +
                 "descripcion TEXT NOT NULL," +
                 "estado BOOLEAN(1) NOT NULL," +
-                "fechaEntrega DATE NOT NULL," +
+                "fechaEntrega TEXT NOT NULL," +
                 "prioridad TEXT NOT NULL," +
-                "idUsuario INTEGER," +
-                "FOREIGN KEY (idUsuario) REFERENCES TABLE_USUARIO(id))");
+                "usuario TEXT," +
+                "FOREIGN KEY (usuario) REFERENCES TABLE_USUARIO(id))");
     }
 
     @Override
@@ -57,4 +57,5 @@ public class DBHelper extends SQLiteOpenHelper {
         Cursor cursor = db.query(TABLE_TAREA, columnas, null, null, null, null, null);
         return cursor;
     }
+
 }

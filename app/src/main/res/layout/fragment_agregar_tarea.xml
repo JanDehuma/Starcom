@@ -12,14 +12,22 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Nombre de la tarea"
-        tools:layout_editor_absoluteX="42dp"
-        tools:layout_editor_absoluteY="89dp" />
+        android:textColor="#FFFFFF"
+        app:layout_constraintBottom_toTopOf="@id/campoTareaLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginVertical="5dp"/>
 
     <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/campoTareaLayout"
         android:layout_width="409dp"
         android:layout_height="wrap_content"
         tools:layout_editor_absoluteX="1dp"
-        tools:layout_editor_absoluteY="145dp">
+        tools:layout_editor_absoluteY="145dp"
+        app:layout_constraintBottom_toTopOf="@id/textView4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginVertical="50dp">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/campoTarea"
@@ -34,36 +42,24 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Descripcion"
-        tools:layout_editor_absoluteX="43dp"
-        tools:layout_editor_absoluteY="257dp" />
-
-    <TextView
-        android:id="@+id/textView6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Descripcion"
+        android:textColor="#FFFFFF"
+        app:layout_constraintBottom_toTopOf="@id/campoDescripcionLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="445dp"
-        tools:text="Prioridad" />
+        android:layout_marginVertical="50dp"/>
 
-    <TextView
-        android:id="@+id/textView7"
-        android:layout_width="146dp"
-        android:layout_height="0dp"
-        android:layout_marginBottom="8dp"
-        android:text="Descripcion"
-        app:layout_constraintBottom_toTopOf="@+id/btnFecha"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.06"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:text="Selecciona una fecha" />
+
 
     <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/campoDescripcionLayout"
         android:layout_width="409dp"
         android:layout_height="wrap_content"
         tools:layout_editor_absoluteX="1dp"
-        tools:layout_editor_absoluteY="323dp">
+        tools:layout_editor_absoluteY="323dp"
+        app:layout_constraintBottom_toTopOf="@id/textView6"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginVertical="50dp">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/campoDescripcion"
@@ -74,42 +70,78 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
-        android:id="@+id/textView5"
+        android:id="@+id/textView6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
-        tools:layout_editor_absoluteX="174dp"
-        tools:layout_editor_absoluteY="398dp" />
+        android:textColor="#FFFFFF"
+        app:layout_constraintBottom_toTopOf="@id/idSpinner"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:text="Prioridad"
+        android:layout_marginVertical="50dp"/>
 
     <Spinner
+
         android:id="@+id/idSpinner"
-        android:layout_width="409dp"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
+        android:layout_marginVertical="50dp"
+        android:layout_marginTop="4dp"
+        android:textColor="#FFFFFF"
+        android:background="#1f84bf"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/idTVSelectedDate" />
+
+
+    <TextView
+        android:id="@+id/idTVSelectedDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/idBtnPickDate"
+        android:layout_centerInParent="true"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView6"
-        app:layout_constraintVertical_bias="0.028"
-        tools:layout_editor_absoluteX="1dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/idBtnPickDate"
+        android:layout_margin="20dp"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="Fecha de entrega"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <!--on below line we are creating
+        a button for date picker-->
+
+    <ImageButton
+        android:id="@+id/idBtnPickDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_margin="20dp"
+        android:layout_marginEnd="2dp"
+        android:layout_marginBottom="8dp"
+        android:background="#00FFFFFF"
+        android:src="@drawable/calendar100"
+        android:textAllCaps="false"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/idBtnAgregar"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <ImageButton
         android:id="@+id/idBtnAgregar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginVertical="50dp"
         android:layout_marginBottom="52dp"
-        android:src="@drawable/save32"
+        android:background="#00FFFFFF"
+        android:src="@drawable/save96"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.095"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <ImageButton
-        android:id="@+id/btnFecha"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:src="@drawable/calendar50"
-        app:layout_constraintBottom_toTopOf="@+id/idBtnAgregar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.08"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -14,7 +14,7 @@ import com.dantefx.starcom.databinding.RelaxmodeViewBinding;
 public class relaxModePresenter extends Fragment {
 
     private RelaxmodeViewBinding binding;
-    ToneGenerator toneGenerator = new ToneGenerator();
+
 
     @Override
     public View onCreateView(

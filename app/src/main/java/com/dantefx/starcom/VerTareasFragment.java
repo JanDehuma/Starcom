@@ -21,7 +21,7 @@ import com.dantefx.starcom.databinding.FragmentVerTareasBinding;
 public class VerTareasFragment extends Fragment {
 
     private FragmentVerTareasBinding binding;
-    private com.dantefx.starcom.db.DBHelper dbHelper;
+    private com.dantefx.db.DBHelper dbHelper;
     private SQLiteDatabase db;
     @Override
     public View onCreateView(
@@ -39,10 +39,9 @@ public class VerTareasFragment extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        TableLayout tableLayout = binding.tableLayout;
-        SQLiteDatabase db = new com.dantefx.starcom.db.DBHelper(getContext()).getReadableDatabase();
+        TableRow tableLayout = binding.tablaTareas;
 
-        Cursor cursor = db.rawQuery("SELECT nombre, descripcion, estado,prioridad, fechaEntrega FROM " + com.dantefx.starcom.db.DBHelper.TABLE_TAREA, null);
+        Cursor cursor = db.rawQuery("SELECT nombre, descripcion, estado,prioridad, fechaEntrega FROM " + com.dantefx.db.DBHelper.TABLE_TAREA, null);
 
         while (cursor.moveToNext()) {
             TableRow row = new TableRow(getContext());

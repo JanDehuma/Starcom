@@ -1,5 +1,6 @@
 package com.dantefx.starcom;
 
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,7 +14,8 @@ import com.dantefx.starcom.databinding.ConcentrateViewBinding;
 public class concentratePresenter extends Fragment {
 
     private ConcentrateViewBinding binding;
-    ToneGenerator tg = new ToneGenerator();
+    public MediaPlayer mp;
+    private int num=0;
 
 
     @Override
@@ -23,6 +25,7 @@ public class concentratePresenter extends Fragment {
     ) {
 
         binding = ConcentrateViewBinding.inflate(inflater, container, false);
+        mp = MediaPlayer.create(this.getContext(), R.raw.concentracion);
         return binding.getRoot();
 
     }
@@ -34,6 +37,7 @@ public class concentratePresenter extends Fragment {
 
             @Override
             public void onClick(View view) {
+                num+=1;
                 isPlaying();
             }
         });
@@ -51,12 +55,15 @@ public class concentratePresenter extends Fragment {
 
 
     public void isPlaying(){
-        if (tg.isPlaying) {
-            tg.stopPulse();
+        if (num % 2 == 0) {
+            // tg.stopPulse();
+            mp.stop();
+            mp.seekTo(0);
             binding.buttonSecond.setImageResource(android.R.drawable.ic_media_play);
         }else{
 
-            tg.playPulse(123.47,23,40000);
+            mp.start();;
+            // tg.playPulse(98,2,40000);
             binding.buttonSecond.setImageResource(android.R.drawable.ic_media_pause);
         }
     }
