@@ -1,37 +1,28 @@
 package com.dantefx.starcom;
 
-import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
-import android.content.ContentValues;
+import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.fragment.NavHostFragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.DatePicker;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import java.text.DateFormat;
 import java.util.Calendar;
-import java.util.Locale;
+
 import android.widget.TextView;
 
 import com.dantefx.db.DBHandler;
-import com.dantefx.db.DBHelper;
 import com.dantefx.db.DBTareas;
-import com.google.android.material.snackbar.Snackbar;
-import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
 
@@ -43,6 +34,7 @@ public class AgregarTareaFragment extends Fragment {
     private TextInputLayout campoNombre;
     private TextInputLayout campoDescripcion;
     private Spinner spinner;
+    int estado = 1;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -54,6 +46,7 @@ public class AgregarTareaFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         DBHandler dbHelper = new DBHandler(this.getContext());
         SQLiteDatabase db = dbHelper.getWritableDatabase();
+
         pickDateBtn = view.findViewById(R.id.idBtnPickDate);
         selectedDateTV = view.findViewById(R.id.idTVSelectedDate);
         guardar = view.findViewById(R.id.idBtnAgregar);
@@ -97,23 +90,26 @@ public class AgregarTareaFragment extends Fragment {
         guardar.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
-                if (db != null) {
-                    Snackbar.make(view, "Guardando", Snackbar.LENGTH_LONG)
-                            .setAction("Action", null).show();
-                    dbHelper.agregarTarea(String.valueOf(campoNombre.getEditText().getText()),String.valueOf(campoDescripcion.getEditText().getText()),
-                            false,String.valueOf(selectedDateTV.getText()),spinner.getSelectedItem().toString());
-                    // Hacer las operaciones que queramos sobre la base de datos
-               /*     ContentValues cv = new ContentValues();
-                    cv.put("nombre", String.valueOf(campoNombre.getEditText().getText()));
-                    cv.put("descripcion", String.valueOf(campoDescripcion.getEditText().getText()));
-                    cv.put("estado", 0);
-                    cv.put("fechaEntrega", String.valueOf(selectedDateTV.getText()));
-                    cv.put("prioridad", spinner.getSelectedItem().toString());
-                    cv.put("usuario", "Dante");
-                    db.insert("tareas", null, cv);*/
+                DBTareas bdTareas = new DBTareas(AgregarTareaFragment.this);
+                long id = bdTareas.insertarTarea(campoNombre.getEditText().getText().toString(), campoDescripcion.getEditText().getText().toString(),
+                        estado, spinner.getSelectedItem().toString(), selectedDateTV.getText().toString());
+
+                if(id>0){
+                    Toast.makeText(getContext(), "REGISTRO GUARDADO", Toast.LENGTH_SHORT).show();
+                    limpiar();
+                }else {
+                    Toast.makeText(getContext(), "ERROR AL GUARDAR EL REGISTRO", Toast.LENGTH_LONG).show();
                 }
             }
         });
 
     }
+    private void limpiar() {
+        campoNombre.getEditText().setText("");
+        campoDescripcion.getEditText().setText("");
+        spinner.setSelection(0);
+        selectedDateTV.setText("");
+    }
+
+
 }
