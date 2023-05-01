@@ -43,6 +43,7 @@ public class AgregarTareaFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_agregar_tarea, container, false);
     }
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
+
         super.onViewCreated(view, savedInstanceState);
         DBHandler dbHelper = new DBHandler(this.getContext());
         SQLiteDatabase db = dbHelper.getWritableDatabase();
@@ -90,7 +91,7 @@ public class AgregarTareaFragment extends Fragment {
         guardar.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
-                DBTareas bdTareas = new DBTareas(AgregarTareaFragment.this);
+                DBTareas bdTareas = new DBTareas(getContext());
                 long id = bdTareas.insertarTarea(campoNombre.getEditText().getText().toString(), campoDescripcion.getEditText().getText().toString(),
                         estado, spinner.getSelectedItem().toString(), selectedDateTV.getText().toString());
 

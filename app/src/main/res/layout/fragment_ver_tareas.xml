@@ -7,80 +7,62 @@
     android:layout_height="match_parent"
     tools:context=".VerTareasFragment">
 
-    <ImageButton
-        android:id="@+id/buttonAgregarTareas"
-        android:layout_width="106dp"
-        android:layout_height="95dp"
-        android:layout_marginBottom="28dp"
-        android:background="@null"
-        android:src="@drawable/add_100"
+    <TableLayout
+        android:id="@+id/tableLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.052"
-        app:layout_constraintStart_toStartOf="parent" />
-
-
-
-    <TableRow
-        android:id="@+id/tablaTareas"
-        android:layout_width="409dp"
-        android:layout_height="307dp"
-        android:background="#03BDD8"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.363">
+        app:layout_constraintVertical_bias="0.247"
+        tools:layout_editor_absoluteX="0dp">
 
-        <TextView
-            android:id="@+id/nombre"
-            android:layout_width="wrap_content"
-            android:layout_weight="1"
-            android:text="Nombre"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/descripcion"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Descripción"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+            <TextView
+                android:id="@+id/tvNombre"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Nombre" />
 
-        <TextView
-            android:id="@+id/estado"
-            android:layout_width="wrap_content"
-            android:layout_weight="1"
-            android:text="Estado"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+            <TextView
+                android:id="@+id/tvDescripcion"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Descripcion" />
 
-        <TextView
-            android:id="@+id/fecha"
-            android:layout_width="61dp"
-            android:layout_weight="1"
-            android:text="Fecha"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+            <TextView
+                android:id="@+id/tvEstado"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Estado" />
 
-        <TextView
-            android:id="@+id/editar"
-            android:layout_width="wrap_content"
-            android:text="Editar"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+            <TextView
+                android:id="@+id/tvPrioridad"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Prioridad" />
 
-        <TextView
-            android:id="@+id/eliminar"
-            android:layout_width="wrap_content"
-            android:text="Eliminar"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+            <TextView
+                android:id="@+id/tvFechaEntrega"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Fecha de Entrega" />
+        </TableRow>
+    </TableLayout>
 
-    </TableRow>
+    <ListView
+        android:id="@+id/lvTareas"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="29dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tableLayout"
+        app:layout_constraintVertical_bias="0.326" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

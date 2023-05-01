@@ -7,8 +7,6 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.Nullable;
 
-import com.dantefx.starcom.AgregarTareaFragment;
-
 public class DBHelper extends SQLiteOpenHelper {
 
     private static final int DATABASE_VERSION = 1;
@@ -16,8 +14,8 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String TABLE_USUARIO = "USUARIO";
     public static final String TABLE_TAREA = "TAREA";
 
-    public DBHelper(@Nullable AgregarTareaFragment context) {
-        super(context.getContext(), DATABASE_NOMBRE, null, DATABASE_VERSION);
+    public DBHelper(@Nullable Context context) {
+        super(context, DATABASE_NOMBRE, null, DATABASE_VERSION);
     }
 
     @Override
@@ -26,6 +24,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 "nombre TEXT NOT NULL)");
 
         db.execSQL("CREATE TABLE " + TABLE_TAREA + "(" +
+                "id INT PRIMARY KEY AUTOINCREMENT ," +
                 "nombre TEXT NOT NULL," +
                 "descripcion TEXT NOT NULL," +
                 "estado BOOLEAN(1) NOT NULL," +
@@ -45,6 +44,8 @@ public class DBHelper extends SQLiteOpenHelper {
 
 
 
+
+
     public Cursor obtenerTodasLasTareas() {
         SQLiteDatabase db = this.getReadableDatabase();
         String[] columnas = {
@@ -57,5 +58,6 @@ public class DBHelper extends SQLiteOpenHelper {
         Cursor cursor = db.query(TABLE_TAREA, columnas, null, null, null, null, null);
         return cursor;
     }
+
 
 }
