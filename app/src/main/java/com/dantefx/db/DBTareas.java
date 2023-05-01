@@ -4,7 +4,9 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
@@ -19,20 +21,21 @@ public class DBTareas extends DBHelper {
         this.context = context;
     }
 
-    public long insertarTarea(String nombre, String descripcion, int estado , String prioridad, String fechaEntrega){
+    public long insertarTarea(@NonNull String nombre, @NonNull String descripcion, @NonNull int estado , @NonNull String prioridad, @NonNull String fechaEntrega){
         long id = 0;
         try {
             DBHelper dbHelper = new DBHelper(context.getApplicationContext());
             SQLiteDatabase db = dbHelper.getWritableDatabase();
 
             ContentValues values = new ContentValues();
-            values.put("nombre", nombre);
-            values.put("descripcion", descripcion);
-            values.put("estado", estado);
-            values.put("prioridad", prioridad);
-            values.put("fechaEntrega", fechaEntrega);
-
-             id = db.insert(TABLE_TAREA, null, values);
+            if(nombre != null && descripcion !=  null && prioridad != null && fechaEntrega != null) {
+                values.put("nombre", nombre);
+                values.put("descripcion", descripcion);
+                values.put("estado", estado);
+                values.put("prioridad", prioridad);
+                values.put("fechaEntrega", fechaEntrega);
+                id = db.insert(TABLE_TAREA, null, values);
+            }
         }catch (Exception ex){
             ex.toString();
         }
