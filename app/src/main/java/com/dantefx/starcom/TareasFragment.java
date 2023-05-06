@@ -13,6 +13,8 @@ import android.widget.ListView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
+
+import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -25,8 +27,8 @@ import com.dantefx.starcom.databinding.FragmentTareasBinding;
 public class TareasFragment extends Fragment {
 
     private FragmentTareasBinding binding;
-    ListView tareas;
-    ArrayList<String> tareasList = new ArrayList<String>();
+    private DBTareas dbTareas;
+    private SimpleCursorAdapter adaptador;
     @Override
     public View onCreateView(
             LayoutInflater inflater, ViewGroup container,
@@ -36,18 +38,7 @@ public class TareasFragment extends Fragment {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
         binding = FragmentTareasBinding.inflate(inflater, container, false);
-        tareas=binding.listTareasFirst;
 
-        if (db != null) {
-            Cursor resultSet = db.rawQuery("Select * from tareas",null);
-            resultSet.moveToFirst();
-            for (int i = 0; i < resultSet.getCount(); i++) {
-                tareasList.add(resultSet.getString(1));
-            }
-        }
-
-        ArrayAdapter adapter = new ArrayAdapter(this.getContext(), R.layout.row_first,tareasList);
-        tareas.setAdapter(adapter);
         TextView dateView = binding.fecha;
         setDate(dateView);
         return binding.getRoot();
@@ -71,6 +62,17 @@ public class TareasFragment extends Fragment {
                         .navigate(R.id.action_FirstFragment_to_agregarTareaFragment);
             }
         });
+
+        dbTareas = new DBTareas(getContext());
+        Cursor cursor = dbTareas.obtenerNombreTarea();
+
+        //Se debe mostrar solo el nombre pero me aparecen lso nombres de las demas columnas
+        String[] desde = {"nombre"};
+        int[] a = {R.id.tvNombre};
+        adaptador = new SimpleCursorAdapter(requireContext(), R.layout.fragment_ver_tareas, cursor, desde, a, 0);
+
+        ListView listaTareas = binding.listTareasFirst;
+        listaTareas.setAdapter(adaptador);
 
     }
 

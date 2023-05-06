@@ -49,4 +49,11 @@ public class DBTareas extends DBHelper {
         return cursor;
     }
 
+    public Cursor obtenerNombreTarea(){
+        SQLiteDatabase db = getReadableDatabase();
+        String[] columnas = {"id as _id", "nombre"};
+        Cursor cursor = db.query(TABLE_TAREA, columnas, null, null, null, null, null);
+        return cursor;
+    }
+
 }
