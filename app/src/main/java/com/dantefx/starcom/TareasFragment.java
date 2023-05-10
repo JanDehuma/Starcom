@@ -74,6 +74,7 @@ public class TareasFragment extends Fragment {
         ListView listaTareas = binding.listTareasFirst;
         listaTareas.setAdapter(adaptador);
 
+
     }
 
     @Override
