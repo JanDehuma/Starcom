@@ -40,17 +40,35 @@ public class AgregarTareaFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_agregar_tarea, container, false);
-        return inflater.inflate(R.layout.fragment_agregar_tarea, container, false);
+
+        // Asignar el listener del botón guardar aquí.
+        guardar = view.findViewById(R.id.idBtnAgregar);
+        guardar.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+
+                DBTareas bdTareas = new DBTareas(getContext());
+                long id = bdTareas.insertarTarea(campoNombre.getEditText().getText().toString(), campoDescripcion.getEditText().getText().toString(),
+                        estado, spinner.getSelectedItem().toString(), selectedDateTV.getText().toString());
+
+                if(id>0){
+                    Toast.makeText(getContext(), "REGISTRO GUARDADO", Toast.LENGTH_SHORT).show();
+                    limpiar();
+                }else {
+                    Toast.makeText(getContext(), "ERROR AL GUARDAR EL REGISTRO", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+
+        return view;
     }
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
 
-        super.onViewCreated(view, savedInstanceState);
+        //super.onViewCreated(view, savedInstanceState);
         DBHandler dbHelper = new DBHandler(this.getContext());
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
         pickDateBtn = view.findViewById(R.id.idBtnPickDate);
         selectedDateTV = view.findViewById(R.id.idTVSelectedDate);
-        guardar = view.findViewById(R.id.idBtnAgregar);
         campoNombre = view.findViewById(R.id.campoTareaLayout);
         campoDescripcion = view.findViewById(R.id.campoDescripcionLayout);
         spinner = view.findViewById(R.id.idSpinner);
@@ -71,7 +89,6 @@ public class AgregarTareaFragment extends Fragment {
                 int year = c.get(Calendar.YEAR);
                 int month = c.get(Calendar.MONTH);
                 int day = c.get(Calendar.DAY_OF_MONTH);
-
                 // on below line we are creating a variable for date picker dialog.
                 DatePickerDialog datePickerDialog = new DatePickerDialog(
                         // on below line we are passing context.
@@ -84,27 +101,13 @@ public class AgregarTareaFragment extends Fragment {
 
                             }
                         },
-                        year, month, day);
+                        year, month,day);
+
                 datePickerDialog.show();
             }
         });
-        guardar.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-
-                DBTareas bdTareas = new DBTareas(getContext());
-                long id = bdTareas.insertarTarea(campoNombre.getEditText().getText().toString(), campoDescripcion.getEditText().getText().toString(),
-                        estado, spinner.getSelectedItem().toString(), selectedDateTV.getText().toString());
-
-                if(id>0){
-                    Toast.makeText(getContext(), "REGISTRO GUARDADO", Toast.LENGTH_SHORT).show();
-                    limpiar();
-                }else {
-                    Toast.makeText(getContext(), "ERROR AL GUARDAR EL REGISTRO", Toast.LENGTH_LONG).show();
-                }
-            }
-        });
-
     }
+
     private void limpiar() {
         campoNombre.getEditText().setText("");
         campoDescripcion.getEditText().setText("");

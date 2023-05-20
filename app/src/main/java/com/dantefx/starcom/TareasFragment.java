@@ -68,11 +68,12 @@ public class TareasFragment extends Fragment {
 
         //Se debe mostrar solo el nombre pero me aparecen lso nombres de las demas columnas
         String[] desde = {"nombre"};
-        int[] a = {R.id.tvNombre};
-        adaptador = new SimpleCursorAdapter(requireContext(), R.layout.fragment_ver_tareas, cursor, desde, a, 0);
+        int[] a = {R.id.rowFirstText};
+        adaptador = new SimpleCursorAdapter(requireContext(), R.layout.row_first, cursor, desde, a, 0);
 
         ListView listaTareas = binding.listTareasFirst;
         listaTareas.setAdapter(adaptador);
+
 
     }
 
