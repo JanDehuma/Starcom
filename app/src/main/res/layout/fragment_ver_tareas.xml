@@ -11,14 +11,14 @@
         android:id="@+id/tableLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#2683D5"
+        android:background="#3E4A55"
         android:dividerPadding="0dp"
         android:stretchColumns="0,1,2,3,4,5,6"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.13">
+        app:layout_constraintVertical_bias="0">
 
         <TableRow
             android:layout_width="match_parent"
@@ -31,7 +31,9 @@
                 android:layout_weight="1"
                 android:backgroundTint="#E91E63"
                 android:gravity="center"
-                android:text="Nombre" />
+                android:text="Nombre"
+                android:textSize="10sp"
+                android:layout_column="0" />
 
             <TextView
                 android:id="@+id/tvDescripcion"
@@ -40,26 +42,19 @@
                 android:layout_weight="3"
                 android:backgroundTint="#E91E63"
                 android:gravity="center"
-                android:text="Descripción" />
-
-            <CheckBox
+                android:text="Descripción"
+                android:textSize="10sp"
+                android:layout_column="1" />
+            <TextView
                 android:id="@+id/tvEstado"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="2"
-                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
                 android:backgroundTint="#E91E63"
                 android:gravity="center"
-                android:text="Estado" />
-
-            <TextView
-                android:id="@+id/tvPrioridad"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="2"
-                android:backgroundTint="#E91E63"
-                android:gravity="center"
-                android:text="Prioridad" />
+                android:text="Estado"
+                android:textSize="10sp"
+                android:layout_column="2" />
 
             <TextView
                 android:id="@+id/tvFechaEntrega"
@@ -68,25 +63,41 @@
                 android:layout_weight="1"
                 android:backgroundTint="#E91E63"
                 android:gravity="center"
-                android:text="Fecha de Entrega" />
+                android:text="Fecha de Entrega"
+                android:textSize="10sp"
+                android:layout_column="3" />
+            <TextView
+                android:id="@+id/tvPrioridad"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:backgroundTint="#E91E63"
+                android:gravity="center"
+                android:text="Prioridad"
+                android:textSize="10sp"
+                android:layout_column="4" />
 
-            <ImageView
-                android:id="@+id/ivEliminar"
+            <TextView
+                android:id="@+id/tvEditar"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:backgroundTint="#E91E63"
                 android:gravity="center"
-                app:srcCompat="@android:drawable/ic_menu_delete" />
-
-            <ImageView
-                android:id="@+id/ivEditar"
+                android:text="Editar"
+                android:textSize="10sp"
+                android:layout_column="5" />
+            <TextView
+                android:id="@+id/tvEliminar"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:backgroundTint="#E91E63"
                 android:gravity="center"
-                app:srcCompat="@drawable/drawing48" />
+                android:text="Eliminar"
+                android:textSize="10sp"
+                android:layout_column="6" />
+
 
         </TableRow>
     </TableLayout>

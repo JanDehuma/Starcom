@@ -56,7 +56,13 @@ public class DBTareas extends DBHelper {
         return cursor;
     }
 
-    public void borrarTarea(long id){
+    public Cursor obtenerTarea(long id){
+        SQLiteDatabase db = getReadableDatabase();
+        String[] columnas = {"id as _id","nombre", "descripcion", "estado", "prioridad", "fechaEntrega"};
+        Cursor cursor = db.query(TABLE_TAREA, columnas, null, null, null, null, null);
+        return cursor;
+    }
+    public void borrarTarea(int id){
         SQLiteDatabase db = getWritableDatabase();
         String whereClause = "id=?";
         String[] whereArgs = new String[]{String.valueOf(id)};

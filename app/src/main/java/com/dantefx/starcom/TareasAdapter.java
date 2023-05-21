@@ -1,7 +1,9 @@
 package com.dantefx.starcom;
 
+import android.content.Context;
 import android.database.Cursor;
 import android.graphics.drawable.Drawable;
+import android.icu.text.Transliterator;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,8 +11,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -23,26 +27,27 @@ public class TareasAdapter extends RecyclerView.Adapter<TareasAdapter.ViewHolder
     public TareasAdapter(Cursor cursor) {
         mCursor = cursor;
     }
-
+    private Context context;
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public TextView tvNombre;
         public TextView tvDescripcion;
         public CheckBox tvEstado;
         public TextView tvPrioridad;
         public TextView tvFechaEntrega;
-        public ImageView buttonEditar;
-        public ImageView buttonEliminar;
+        public ImageButton buttonEditar;
+        public ImageButton buttonEliminar;
+
 
         public ViewHolder(View itemView) {
             super(itemView);
 
-            tvNombre = itemView.findViewById(R.id.tvNombre);
-            tvDescripcion = itemView.findViewById(R.id.tvDescripcion);
-            tvEstado = itemView.findViewById(R.id.tvEstado);
-            tvPrioridad = itemView.findViewById(R.id.tvPrioridad);
-            tvFechaEntrega = itemView.findViewById(R.id.tvFechaEntrega);
-            buttonEliminar = itemView.findViewById(R.id.ivEliminar);
-            buttonEditar = itemView.findViewById(R.id.ivEditar);
+            tvNombre = itemView.findViewById(R.id.texViewNombreTarea);
+            tvDescripcion = itemView.findViewById(R.id.texViewDescripcionTarea);
+            tvEstado = itemView.findViewById(R.id.checkboxTarea);
+            tvPrioridad = itemView.findViewById(R.id.textViewPrioridad);
+            tvFechaEntrega = itemView.findViewById(R.id.textViewFechaEntrega);
+            buttonEliminar = itemView.findViewById(R.id.imageButtonEliminar);
+            buttonEditar = itemView.findViewById(R.id.imageButtonEditar);
 
             tvEstado.setText("");
         }
@@ -51,7 +56,8 @@ public class TareasAdapter extends RecyclerView.Adapter<TareasAdapter.ViewHolder
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        View view = inflater.inflate(R.layout.fragment_ver_tareas, parent, false);
+        View view = inflater.inflate(R.layout.row_add, parent, false);
+        context = parent.getContext();
         return new ViewHolder(view);
     }
 
@@ -59,10 +65,6 @@ public class TareasAdapter extends RecyclerView.Adapter<TareasAdapter.ViewHolder
     @Override
     public void onBindViewHolder(@NonNull TareasAdapter.ViewHolder holder, int position) {
         mCursor.moveToPosition(position);
-
-        ImageView ivEliminar = holder.itemView.findViewById(R.id.ivEliminar);
-        ImageView ivEditar = holder.itemView.findViewById(R.id.ivEditar);
-
         String nombre = mCursor.getString(mCursor.getColumnIndexOrThrow("nombre"));
         String descripcion = mCursor.getString(mCursor.getColumnIndexOrThrow("descripcion"));
         int estado = mCursor.getInt(mCursor.getColumnIndexOrThrow("estado"));
@@ -75,12 +77,14 @@ public class TareasAdapter extends RecyclerView.Adapter<TareasAdapter.ViewHolder
         holder.tvEstado.setChecked(false);
         holder.tvPrioridad.setText(prioridad);
         holder.tvFechaEntrega.setText(fechaEntrega);
+        holder.buttonEliminar.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                DBTareas bdTareas = new DBTareas(context);
+                bdTareas.borrarTarea(holder.getAdapterPosition());
+                Toast.makeText(context, "REGISTRO BORRADO "+holder.getAdapterPosition(), Toast.LENGTH_SHORT).show();
 
-        ivEliminar.setImageResource(android.R.drawable.ic_menu_delete);
-        ivEditar.setImageResource(R.drawable.drawing48);
-
-
-
+            }
+        });
     }
 
 
