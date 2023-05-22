@@ -44,7 +44,9 @@
                 android:gravity="center"
                 android:text="Descripción"
                 android:textSize="10sp"
-                android:layout_column="1" />
+                android:layout_column="1"
+                android:inputType="textMultiLine"
+                android:ellipsize="end" />
             <TextView
                 android:id="@+id/tvEstado"
                 android:layout_width="0dp"

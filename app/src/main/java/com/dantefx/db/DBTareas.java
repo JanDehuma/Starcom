@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -73,6 +74,38 @@ public class DBTareas extends DBHelper {
         SQLiteDatabase db = getWritableDatabase();
         db.delete(TABLE_TAREA, null, null);
     }
+
+    public boolean actualizarTarea(long id, String nombre, String descripcion, String prioridad, String fechaEntrega) {
+        try {
+            DBHelper dbHelper = new DBHelper(context.getApplicationContext());
+            SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+            ContentValues values = new ContentValues();
+            values.put("nombre", nombre);
+            values.put("descripcion", descripcion);
+            values.put("prioridad", prioridad);
+            values.put("fechaEntrega", fechaEntrega);
+
+            String whereClause = "id=?";
+            String[] whereArgs = new String[]{String.valueOf(id)};
+
+            int numRowsUpdated = db.update(TABLE_TAREA, values, whereClause, whereArgs);
+            return numRowsUpdated > 0;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return false;
+    }
+
+    public long obtenerIdRegistroActual(ListView listView) {
+        int position = listView.getCheckedItemPosition();
+        if (position != ListView.INVALID_POSITION) {
+            return listView.getItemIdAtPosition(position);
+        }
+        return -1; // Devuelve un valor adecuado según tu implementación
+    }
+
+
 
 
 }

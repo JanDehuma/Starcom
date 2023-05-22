@@ -1,9 +1,11 @@
 package com.dantefx.starcom;
 
+import android.app.Activity;
 import android.content.Context;
 import android.database.Cursor;
 import android.graphics.drawable.Drawable;
 import android.icu.text.Transliterator;
+import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +19,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.dantefx.db.DBTareas;
@@ -62,35 +68,46 @@ public class TareasAdapter extends RecyclerView.Adapter<TareasAdapter.ViewHolder
     }
 
 
+
     @Override
     public void onBindViewHolder(@NonNull TareasAdapter.ViewHolder holder, int position) {
-        mCursor.moveToPosition(position);
-        String nombre = mCursor.getString(mCursor.getColumnIndexOrThrow("nombre"));
-        String descripcion = mCursor.getString(mCursor.getColumnIndexOrThrow("descripcion"));
-        int estado = mCursor.getInt(mCursor.getColumnIndexOrThrow("estado"));
-        String prioridad = mCursor.getString(mCursor.getColumnIndexOrThrow("prioridad"));
-        String fechaEntrega = mCursor.getString(mCursor.getColumnIndexOrThrow("fechaEntrega"));
+        if (mCursor != null && mCursor.moveToPosition(position)) {
+            String nombre = mCursor.getString(mCursor.getColumnIndexOrThrow("nombre"));
+            String descripcion = mCursor.getString(mCursor.getColumnIndexOrThrow("descripcion"));
+            int estado = mCursor.getInt(mCursor.getColumnIndexOrThrow("estado"));
+            String prioridad = mCursor.getString(mCursor.getColumnIndexOrThrow("prioridad"));
+            String fechaEntrega = mCursor.getString(mCursor.getColumnIndexOrThrow("fechaEntrega"));
 
-        holder.tvNombre.setText(nombre);
-        holder.tvDescripcion.setText(descripcion);
+            holder.tvNombre.setText(nombre);
+            holder.tvDescripcion.setText(descripcion);
 
-        holder.tvEstado.setChecked(false);
-        holder.tvPrioridad.setText(prioridad);
-        holder.tvFechaEntrega.setText(fechaEntrega);
-        holder.buttonEliminar.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                DBTareas bdTareas = new DBTareas(context);
-                bdTareas.borrarTarea(holder.getAdapterPosition());
-                Toast.makeText(context, "REGISTRO BORRADO "+holder.getAdapterPosition(), Toast.LENGTH_SHORT).show();
+            holder.tvEstado.setChecked(false);
+            holder.tvPrioridad.setText(prioridad);
+            holder.tvFechaEntrega.setText(fechaEntrega);
 
-            }
-        });
+            holder.buttonEliminar.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    DBTareas bdTareas = new DBTareas(context);
+                    bdTareas.borrarTarea(holder.getAdapterPosition());
+                    Toast.makeText(context, "REGISTRO BORRADO " + holder.getAdapterPosition(), Toast.LENGTH_SHORT).show();
+                    notifyDataSetChanged(); // Notificar cambio en el adaptador después de eliminar un registro
+                }
+            });
+
+            holder.buttonEditar.setOnClickListener( view -> {
+                int position = holder.getAdapterPosition();
+                Navigation.findNavController(view).navigate(R.id.editarTareaFragment,bundle);
+            });
+
+
+        }
     }
+
 
 
     @Override
     public int getItemCount() {
-        return mCursor.getCount();
+        return mCursor != null ? mCursor.getCount() : 0;
     }
 
 
@@ -99,9 +116,8 @@ public class TareasAdapter extends RecyclerView.Adapter<TareasAdapter.ViewHolder
             mCursor.close();
         }
         mCursor = newCursor;
-        if (mCursor != null) {
-            notifyDataSetChanged();
-        }
+        notifyDataSetChanged();
     }
+
 
 }

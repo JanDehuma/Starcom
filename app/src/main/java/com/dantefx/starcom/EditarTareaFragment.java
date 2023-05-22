@@ -1,64 +1,152 @@
 package com.dantefx.starcom;
 
+import android.app.DatePickerDialog;
+import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.DatePicker;
+import android.widget.ImageButton;
+import android.widget.Spinner;
+import android.widget.Toast;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link EditarTareaFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import java.util.Calendar;
+
+import android.widget.TextView;
+
+import com.dantefx.db.DBHandler;
+import com.dantefx.db.DBTareas;
+import com.dantefx.starcom.R;
+import com.dantefx.starcom.TareasAdapter;
+import com.google.android.material.textfield.TextInputLayout;
+
+
 public class EditarTareaFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    private ImageButton pickDateBtn;
+    private TextView selectedDateTV;
+    private ImageButton guardar;
+    private TextInputLayout campoNombre;
+    private TextInputLayout campoDescripcion;
+    private Spinner spinner;
+    int estado = 1;
+    private int position;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private Bundle bundle;
 
-    public EditarTareaFragment() {
-        // Required empty public constructor
-    }
+    private TareasAdapter tareasAdapter;
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment EditarTareaFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static EditarTareaFragment newInstance(String param1, String param2) {
-        EditarTareaFragment fragment = new EditarTareaFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
+    public EditarTareaFragment(){
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_editar_tarea, container, false);
+        View view = inflater.inflate(R.layout.fragment_agregar_tarea, container, false);
+
+        // Asignar el listener del botón guardar aquí.
+        guardar = view.findViewById(R.id.idBtnAgregar);
+        guardar.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                String nombre = campoNombre.getEditText().getText().toString();
+                String descripcion = campoDescripcion.getEditText().getText().toString();
+                String prioridad = spinner.getSelectedItem().toString();
+                String fechaEntrega = selectedDateTV.getText().toString();
+
+
+
+
+
+                // Obtener el ID del registro que se va a actualizar
+
+                long idRegistro = tareasAdapter.getItemId(Integer.valueOf("POS"));
+
+                DBTareas bdTareas = new DBTareas(getContext());
+                boolean actualizacionExitosa = bdTareas.actualizarTarea(idRegistro, nombre, descripcion, prioridad, fechaEntrega);
+
+                if (actualizacionExitosa) {
+                    Toast.makeText(getContext(), "REGISTRO ACTUALIZADO", Toast.LENGTH_SHORT).show();
+                    limpiar();
+
+                    Cursor nuevoCursor = bdTareas.obtenerTareas();
+
+                    // Actualizar el adaptador con el nuevo Cursor
+                    tareasAdapter.swapCursor(nuevoCursor);
+                } else {
+                    Toast.makeText(getContext(), "ERROR AL ACTUALIZAR EL REGISTRO", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+
+
+
+
+
+        return view;
     }
+
+    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
+
+        //super.onViewCreated(view, savedInstanceState);
+        DBHandler dbHelper = new DBHandler(this.getContext());
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+        pickDateBtn = view.findViewById(R.id.idBtnPickDate);
+        selectedDateTV = view.findViewById(R.id.idTVSelectedDate);
+        campoNombre = view.findViewById(R.id.campoTareaLayout);
+        campoDescripcion = view.findViewById(R.id.campoDescripcionLayout);
+        spinner = view.findViewById(R.id.idSpinner);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this.getContext(), R.array.prioridades_array,
+                android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+
+        pickDateBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // on below line we are getting
+                // the instance of our calendar.
+                final Calendar c = Calendar.getInstance();
+
+                // on below line we are getting
+                // our day, month and year.
+                int year = c.get(Calendar.YEAR);
+                int month = c.get(Calendar.MONTH);
+                int day = c.get(Calendar.DAY_OF_MONTH);
+                // on below line we are creating a variable for date picker dialog.
+                DatePickerDialog datePickerDialog = new DatePickerDialog(
+                        // on below line we are passing context.
+                        com.dantefx.starcom.EditarTareaFragment.this.getContext(),
+                        new DatePickerDialog.OnDateSetListener() {
+                            @Override
+                            public void onDateSet(DatePicker view, int year,
+                                                  int monthOfYear, int dayOfMonth) {
+                                selectedDateTV.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
+
+                            }
+                        },
+                        year, month,day);
+
+                datePickerDialog.show();
+            }
+        });
+    }
+
+    private void limpiar() {
+        campoNombre.getEditText().setText("");
+        campoDescripcion.getEditText().setText("");
+        spinner.setSelection(0);
+        selectedDateTV.setText("");
+    }
+
+
 }
