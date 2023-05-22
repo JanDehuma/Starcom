@@ -95,7 +95,8 @@ public class TareasAdapter extends RecyclerView.Adapter<TareasAdapter.ViewHolder
             });
 
             holder.buttonEditar.setOnClickListener( view -> {
-                int position = holder.getAdapterPosition();
+                Bundle bundle = new Bundle();
+                bundle.putInt("POS", holder.getAdapterPosition());
                 Navigation.findNavController(view).navigate(R.id.editarTareaFragment,bundle);
             });
 

@@ -38,9 +38,12 @@ public class EditarTareaFragment extends Fragment {
     private TextInputLayout campoDescripcion;
     private Spinner spinner;
     int estado = 1;
-    private int position;
 
-    private Bundle bundle;
+
+    private int position1;
+    private static final String ARG = "POS";
+
+    private Bundle bundle = new Bundle();
 
     private TareasAdapter tareasAdapter;
 
@@ -48,13 +51,27 @@ public class EditarTareaFragment extends Fragment {
 
     }
 
+    public static EditarTareaFragment newInstance (Integer position1){
+        EditarTareaFragment fragment = new EditarTareaFragment();
+        Bundle args = new Bundle();
+
+        args.putInt(ARG, position1);
+        fragment.setArguments(args);
+        return fragment;
+    }
+    public void onCreate(Bundle saveInstanceState){
+        super.onCreate(saveInstanceState);
+        if(getArguments() != null){
+            position1 = getArguments().getInt(ARG);
+        }
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_agregar_tarea, container, false);
+        View view = inflater.inflate(R.layout.fragment_editar_tarea, container, false);
 
         // Asignar el listener del botón guardar aquí.
-        guardar = view.findViewById(R.id.idBtnAgregar);
+        guardar = view.findViewById(R.id.idBtnActualizar);
         guardar.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 String nombre = campoNombre.getEditText().getText().toString();
@@ -68,21 +85,26 @@ public class EditarTareaFragment extends Fragment {
 
                 // Obtener el ID del registro que se va a actualizar
 
-                long idRegistro = tareasAdapter.getItemId(Integer.valueOf("POS"));
-
                 DBTareas bdTareas = new DBTareas(getContext());
-                boolean actualizacionExitosa = bdTareas.actualizarTarea(idRegistro, nombre, descripcion, prioridad, fechaEntrega);
+                System.out.println("AAAAAAAAAGGGGGGGGGGGGGGGGGGGGGGG" + bdTareas.actualizarTarea(position1,nombre,descripcion,
+                        prioridad,fechaEntrega));
 
-                if (actualizacionExitosa) {
-                    Toast.makeText(getContext(), "REGISTRO ACTUALIZADO", Toast.LENGTH_SHORT).show();
-                    limpiar();
+                boolean actualizacionExitosa = bdTareas.actualizarTarea(position1, nombre, descripcion, prioridad, fechaEntrega);
 
-                    Cursor nuevoCursor = bdTareas.obtenerTareas();
+                try {
+                    if (actualizacionExitosa) {
+                        Toast.makeText(getContext(), "REGISTRO ACTUALIZADO", Toast.LENGTH_SHORT).show();
+                        limpiar();
 
-                    // Actualizar el adaptador con el nuevo Cursor
-                    tareasAdapter.swapCursor(nuevoCursor);
-                } else {
-                    Toast.makeText(getContext(), "ERROR AL ACTUALIZAR EL REGISTRO", Toast.LENGTH_LONG).show();
+                        Cursor nuevoCursor = bdTareas.obtenerTareas();
+
+                        // Actualizar el adaptador con el nuevo Cursor
+                        tareasAdapter.swapCursor(nuevoCursor);
+                    } else {
+                        Toast.makeText(getContext(), "ERROR AL ACTUALIZAR EL REGISTRO", Toast.LENGTH_LONG).show();
+                    }
+                }catch (Exception e) {
+                    e.printStackTrace();
                 }
             }
         });

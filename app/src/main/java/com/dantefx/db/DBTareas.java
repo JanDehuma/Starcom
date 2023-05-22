@@ -22,7 +22,7 @@ public class DBTareas extends DBHelper {
         this.context = context;
     }
 
-    public long insertarTarea(@NonNull String nombre, @NonNull String descripcion, @NonNull int estado , @NonNull String prioridad, @NonNull String fechaEntrega){
+    public long insertarTarea(String nombre, String descripcion, int estado , String prioridad, String fechaEntrega){
         long id = 0;
         try {
             DBHelper dbHelper = new DBHelper(context.getApplicationContext());
@@ -75,7 +75,7 @@ public class DBTareas extends DBHelper {
         db.delete(TABLE_TAREA, null, null);
     }
 
-    public boolean actualizarTarea(long id, String nombre, String descripcion, String prioridad, String fechaEntrega) {
+    public boolean actualizarTarea(int id, String nombre, String descripcion,  String prioridad, String fechaEntrega) {
         try {
             DBHelper dbHelper = new DBHelper(context.getApplicationContext());
             SQLiteDatabase db = dbHelper.getWritableDatabase();
