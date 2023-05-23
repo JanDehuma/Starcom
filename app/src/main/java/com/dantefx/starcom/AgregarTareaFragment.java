@@ -2,6 +2,7 @@ package com.dantefx.starcom;
 
 import android.app.DatePickerDialog;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 
@@ -36,6 +37,8 @@ public class AgregarTareaFragment extends Fragment {
     private Spinner spinner;
     int estado = 1;
 
+    private TareasAdapter tareasAdapter;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -46,14 +49,29 @@ public class AgregarTareaFragment extends Fragment {
         guardar.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
-                DBTareas bdTareas = new DBTareas(getContext());
-                long id = bdTareas.insertarTarea(campoNombre.getEditText().getText().toString(), campoDescripcion.getEditText().getText().toString(),
-                        estado, spinner.getSelectedItem().toString(), selectedDateTV.getText().toString());
+                String nombre = campoNombre.getEditText().getText().toString();
+                String descripcion = campoDescripcion.getEditText().getText().toString();
+                String prioridad = spinner.getSelectedItem().toString();
+                String fechaEntrega = selectedDateTV.getText().toString();
 
-                if(id>0){
+                // Verificar que los campos no sean nulos o vacíos
+                if (nombre.isEmpty() || descripcion.isEmpty() || prioridad.isEmpty() || fechaEntrega.isEmpty()) {
+                    Toast.makeText(getContext(), "Por favor, complete todos los campos", Toast.LENGTH_SHORT).show();
+                    return; // Detener el flujo de ejecución
+                }
+
+                DBTareas bdTareas = new DBTareas(getContext());
+                long id = bdTareas.insertarTarea(nombre, descripcion, estado, prioridad, fechaEntrega);
+
+                if (id > 0) {
                     Toast.makeText(getContext(), "REGISTRO GUARDADO", Toast.LENGTH_SHORT).show();
                     limpiar();
-                }else {
+
+                    Cursor nuevoCursor = bdTareas.obtenerTareas();
+
+                    // Actualizar el adaptador con el nuevo Cursor
+                    tareasAdapter.swapCursor(nuevoCursor);
+                } else {
                     Toast.makeText(getContext(), "ERROR AL GUARDAR EL REGISTRO", Toast.LENGTH_LONG).show();
                 }
             }
@@ -61,6 +79,7 @@ public class AgregarTareaFragment extends Fragment {
 
         return view;
     }
+
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
 
         //super.onViewCreated(view, savedInstanceState);

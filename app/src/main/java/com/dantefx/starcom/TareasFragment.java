@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
 import android.widget.SimpleCursorAdapter;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -48,6 +49,8 @@ public class TareasFragment extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+
+
         binding.buttonVerTareas.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -73,6 +76,12 @@ public class TareasFragment extends Fragment {
 
         ListView listaTareas = binding.listTareasFirst;
         listaTareas.setAdapter(adaptador);
+
+       /* Spinner spinnerEtapa = view.findViewById(R.id.spinnerPrioridad);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(), R.array.etapa, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerEtapa.setAdapter(adapter);*/
+
 
 
     }

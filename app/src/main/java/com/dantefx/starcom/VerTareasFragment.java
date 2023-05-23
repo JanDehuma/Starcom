@@ -31,6 +31,7 @@ public class VerTareasFragment extends Fragment {
         dbTareas = new DBTareas(getContext());
         Cursor cursor = dbTareas.obtenerTareas();
 
+
         recyclerView = binding.rvTareas;
         adaptador = new TareasAdapter(cursor);
         recyclerView.setAdapter(adaptador);
@@ -43,22 +44,18 @@ public class VerTareasFragment extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        /*binding.imageView.setOnClickListener(new View.OnClickListener() {
+        binding.imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 NavHostFragment.findNavController(VerTareasFragment.this)
                         .navigate(R.id.action_SecondFragment_to_agregarTareaFragment);
             }
-        });*/
+        });
+    }
 
-        /* Button btnBorrarTodo = view.findViewById(R.id.buttonBorrar);
-
-        btnBorrarTodo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dbTareas.borrarTodasLasTareas();
-            }
-        });*/
+    private void actualizarTabla() {
+        Cursor nuevoCursor = dbTareas.obtenerTareas();
+        adaptador.swapCursor(nuevoCursor);
     }
 
     @Override

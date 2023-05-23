@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="etapa">
+        <item>Inicio</item>
+        <item>Desarrollo</item>
+        <item>Revisión</item>
+        <item>Fin</item>
+    </string-array>
+
+</resources>

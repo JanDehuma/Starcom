@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -21,7 +22,7 @@ public class DBTareas extends DBHelper {
         this.context = context;
     }
 
-    public long insertarTarea(@NonNull String nombre, @NonNull String descripcion, @NonNull int estado , @NonNull String prioridad, @NonNull String fechaEntrega){
+    public long insertarTarea(String nombre, String descripcion, int estado , String prioridad, String fechaEntrega){
         long id = 0;
         try {
             DBHelper dbHelper = new DBHelper(context.getApplicationContext());
@@ -56,7 +57,13 @@ public class DBTareas extends DBHelper {
         return cursor;
     }
 
-    public void borrarTarea(long id){
+    public Cursor obtenerTarea(long id){
+        SQLiteDatabase db = getReadableDatabase();
+        String[] columnas = {"id as _id","nombre", "descripcion", "estado", "prioridad", "fechaEntrega"};
+        Cursor cursor = db.query(TABLE_TAREA, columnas, null, null, null, null, null);
+        return cursor;
+    }
+    public void borrarTarea(int id){
         SQLiteDatabase db = getWritableDatabase();
         String whereClause = "id=?";
         String[] whereArgs = new String[]{String.valueOf(id)};
@@ -67,6 +74,38 @@ public class DBTareas extends DBHelper {
         SQLiteDatabase db = getWritableDatabase();
         db.delete(TABLE_TAREA, null, null);
     }
+
+    public boolean actualizarTarea(int id, String nombre, String descripcion,  String prioridad, String fechaEntrega) {
+        try {
+            DBHelper dbHelper = new DBHelper(context.getApplicationContext());
+            SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+            ContentValues values = new ContentValues();
+            values.put("nombre", nombre);
+            values.put("descripcion", descripcion);
+            values.put("prioridad", prioridad);
+            values.put("fechaEntrega", fechaEntrega);
+
+            String whereClause = "id=?";
+            String[] whereArgs = new String[]{String.valueOf(id)};
+
+            int numRowsUpdated = db.update(TABLE_TAREA, values, whereClause, whereArgs);
+            return numRowsUpdated > 0;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return false;
+    }
+
+    public long obtenerIdRegistroActual(ListView listView) {
+        int position = listView.getCheckedItemPosition();
+        if (position != ListView.INVALID_POSITION) {
+            return listView.getItemIdAtPosition(position);
+        }
+        return -1; // Devuelve un valor adecuado según tu implementación
+    }
+
+
 
 
 }
