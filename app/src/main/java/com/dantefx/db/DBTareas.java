@@ -75,11 +75,11 @@ public class DBTareas extends DBHelper {
         db.delete(TABLE_TAREA, null, null);
     }
 
-    public boolean actualizarTarea(int id, String nombre, String descripcion,  String prioridad, String fechaEntrega) {
-        try {
-            DBHelper dbHelper = new DBHelper(context.getApplicationContext());
-            SQLiteDatabase db = dbHelper.getWritableDatabase();
+    public boolean actualizarTarea(int id, String nombre, String descripcion, String prioridad, String fechaEntrega) {
+        DBHelper dbHelper = new DBHelper(context.getApplicationContext());
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
 
+        try {
             ContentValues values = new ContentValues();
             values.put("nombre", nombre);
             values.put("descripcion", descripcion);
@@ -90,12 +90,16 @@ public class DBTareas extends DBHelper {
             String[] whereArgs = new String[]{String.valueOf(id)};
 
             int numRowsUpdated = db.update(TABLE_TAREA, values, whereClause, whereArgs);
+
             return numRowsUpdated > 0;
         } catch (Exception ex) {
             ex.printStackTrace();
+            return false;
+        } finally {
+            db.close();
         }
-        return false;
     }
+
 
     public long obtenerIdRegistroActual(ListView listView) {
         int position = listView.getCheckedItemPosition();

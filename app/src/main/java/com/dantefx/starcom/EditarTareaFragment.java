@@ -47,9 +47,7 @@ public class EditarTareaFragment extends Fragment {
 
     private TareasAdapter tareasAdapter;
 
-    public EditarTareaFragment(){
-
-    }
+    public EditarTareaFragment(){}
 
     public static EditarTareaFragment newInstance (Integer position1){
         EditarTareaFragment fragment = new EditarTareaFragment();
@@ -84,16 +82,16 @@ public class EditarTareaFragment extends Fragment {
 
 
                 // Obtener el ID del registro que se va a actualizar
-
                 DBTareas bdTareas = new DBTareas(getContext());
-                System.out.println("AAAAAAAAAGGGGGGGGGGGGGGGGGGGGGGG" + bdTareas.actualizarTarea(position1,nombre,descripcion,
-                        prioridad,fechaEntrega));
+
 
                 boolean actualizacionExitosa = bdTareas.actualizarTarea(position1, nombre, descripcion, prioridad, fechaEntrega);
 
+                System.out.println(actualizacionExitosa);
+
                 try {
                     if (actualizacionExitosa) {
-                        Toast.makeText(getContext(), "REGISTRO ACTUALIZADO", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), "REGISTRO ACTUALIZADO" + position1, Toast.LENGTH_SHORT).show();
                         limpiar();
 
                         Cursor nuevoCursor = bdTareas.obtenerTareas();
@@ -101,7 +99,7 @@ public class EditarTareaFragment extends Fragment {
                         // Actualizar el adaptador con el nuevo Cursor
                         tareasAdapter.swapCursor(nuevoCursor);
                     } else {
-                        Toast.makeText(getContext(), "ERROR AL ACTUALIZAR EL REGISTRO", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getContext(), "ERROR AL ACTUALIZAR EL REGISTRO"  + position1, Toast.LENGTH_LONG).show() ;
                     }
                 }catch (Exception e) {
                     e.printStackTrace();
