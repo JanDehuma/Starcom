@@ -1,9 +1,7 @@
 package com.dantefx.starcom;
 
 import android.app.DatePickerDialog;
-import android.content.Context;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -22,14 +20,11 @@ import java.util.Calendar;
 
 import android.widget.TextView;
 
-import com.dantefx.db.DBHandler;
-import com.dantefx.db.DBTareas;
-import com.dantefx.starcom.R;
-import com.dantefx.starcom.TareasAdapter;
+import com.dantefx.db.Administra;
 import com.google.android.material.textfield.TextInputLayout;
 
 
-public class EditarTareaFragment extends Fragment {
+public class EditActivityPresenter extends Fragment {
 
     private ImageButton pickDateBtn;
     private TextView selectedDateTV;
@@ -47,12 +42,12 @@ public class EditarTareaFragment extends Fragment {
 
     private TareasAdapter tareasAdapter;
 
-    public EditarTareaFragment(){
+    public EditActivityPresenter(){
 
     }
 
-    public static EditarTareaFragment newInstance (Integer position1){
-        EditarTareaFragment fragment = new EditarTareaFragment();
+    public static EditActivityPresenter newInstance (Integer position1){
+        EditActivityPresenter fragment = new EditActivityPresenter();
         Bundle args = new Bundle();
 
         args.putInt(ARG, position1);
@@ -68,7 +63,7 @@ public class EditarTareaFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_editar_tarea, container, false);
+        View view = inflater.inflate(R.layout.edit_activity_view, container, false);
 
         // Asignar el listener del botón guardar aquí.
         guardar = view.findViewById(R.id.idBtnActualizar);
@@ -85,7 +80,7 @@ public class EditarTareaFragment extends Fragment {
 
                 // Obtener el ID del registro que se va a actualizar
 
-                DBTareas bdTareas = new DBTareas(getContext());
+                Administra bdTareas = new Administra(getContext());
                 System.out.println("AAAAAAAAAGGGGGGGGGGGGGGGGGGGGGGG" + bdTareas.actualizarTarea(position1,nombre,descripcion,
                         prioridad,fechaEntrega));
 
@@ -118,9 +113,7 @@ public class EditarTareaFragment extends Fragment {
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
 
-        //super.onViewCreated(view, savedInstanceState);
-        DBHandler dbHelper = new DBHandler(this.getContext());
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
+
 
         pickDateBtn = view.findViewById(R.id.idBtnPickDate);
         selectedDateTV = view.findViewById(R.id.idTVSelectedDate);
@@ -147,7 +140,7 @@ public class EditarTareaFragment extends Fragment {
                 // on below line we are creating a variable for date picker dialog.
                 DatePickerDialog datePickerDialog = new DatePickerDialog(
                         // on below line we are passing context.
-                        com.dantefx.starcom.EditarTareaFragment.this.getContext(),
+                        EditActivityPresenter.this.getContext(),
                         new DatePickerDialog.OnDateSetListener() {
                             @Override
                             public void onDateSet(DatePicker view, int year,

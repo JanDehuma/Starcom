@@ -7,14 +7,14 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.Nullable;
 
-public class DBHelper extends SQLiteOpenHelper {
+public class BDManager extends SQLiteOpenHelper {
 
     private static final int DATABASE_VERSION = 1;
     private static final String DATABASE_NOMBRE = "starcom.db";
     public static final String TABLE_USUARIO = "USUARIO";
     public static final String TABLE_TAREA = "TAREA";
 
-    public DBHelper(@Nullable Context context) {
+    public BDManager(@Nullable Context context) {
         super(context, DATABASE_NOMBRE, null, DATABASE_VERSION);
     }
 

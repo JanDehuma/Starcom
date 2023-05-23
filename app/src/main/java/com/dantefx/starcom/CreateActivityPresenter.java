@@ -1,9 +1,7 @@
 package com.dantefx.starcom;
 
 import android.app.DatePickerDialog;
-import android.content.Context;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -22,12 +20,11 @@ import java.util.Calendar;
 
 import android.widget.TextView;
 
-import com.dantefx.db.DBHandler;
-import com.dantefx.db.DBTareas;
+import com.dantefx.db.Administra;
 import com.google.android.material.textfield.TextInputLayout;
 
 
-public class AgregarTareaFragment extends Fragment {
+public class CreateActivityPresenter extends Fragment {
 
     private ImageButton pickDateBtn;
     private TextView selectedDateTV;
@@ -42,7 +39,7 @@ public class AgregarTareaFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_agregar_tarea, container, false);
+        View view = inflater.inflate(R.layout.create_activity_view, container, false);
 
         // Asignar el listener del botón guardar aquí.
         guardar = view.findViewById(R.id.idBtnAgregar);
@@ -60,7 +57,7 @@ public class AgregarTareaFragment extends Fragment {
                     return; // Detener el flujo de ejecución
                 }
 
-                DBTareas bdTareas = new DBTareas(getContext());
+                Administra bdTareas = new Administra(getContext());
                 long id = bdTareas.insertarTarea(nombre, descripcion, estado, prioridad, fechaEntrega);
 
                 if (id > 0) {
@@ -82,9 +79,7 @@ public class AgregarTareaFragment extends Fragment {
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
 
-        //super.onViewCreated(view, savedInstanceState);
-        DBHandler dbHelper = new DBHandler(this.getContext());
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
+
 
         pickDateBtn = view.findViewById(R.id.idBtnPickDate);
         selectedDateTV = view.findViewById(R.id.idTVSelectedDate);
@@ -111,7 +106,7 @@ public class AgregarTareaFragment extends Fragment {
                 // on below line we are creating a variable for date picker dialog.
                 DatePickerDialog datePickerDialog = new DatePickerDialog(
                         // on below line we are passing context.
-                        AgregarTareaFragment.this.getContext(),
+                        CreateActivityPresenter.this.getContext(),
                         new DatePickerDialog.OnDateSetListener() {
                             @Override
                             public void onDateSet(DatePicker view, int year,

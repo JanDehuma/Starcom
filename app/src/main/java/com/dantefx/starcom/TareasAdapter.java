@@ -1,31 +1,21 @@
 package com.dantefx.starcom;
 
-import android.app.Activity;
 import android.content.Context;
 import android.database.Cursor;
-import android.graphics.drawable.Drawable;
-import android.icu.text.Transliterator;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.FrameLayout;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
-import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.dantefx.db.DBTareas;
+import com.dantefx.db.Administra;
 
 public class TareasAdapter extends RecyclerView.Adapter<TareasAdapter.ViewHolder> {
     private Cursor mCursor;
@@ -87,7 +77,7 @@ public class TareasAdapter extends RecyclerView.Adapter<TareasAdapter.ViewHolder
 
             holder.buttonEliminar.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    DBTareas bdTareas = new DBTareas(context);
+                    Administra bdTareas = new Administra(context);
                     bdTareas.borrarTarea(holder.getAdapterPosition());
                     Toast.makeText(context, "REGISTRO BORRADO " + holder.getAdapterPosition(), Toast.LENGTH_SHORT).show();
                     notifyDataSetChanged(); // Notificar cambio en el adaptador después de eliminar un registro

@@ -7,9 +7,9 @@
 
     <fragment
         android:id="@+id/FirstFragment"
-        android:name="com.dantefx.starcom.TareasFragment"
+        android:name="com.dantefx.starcom.ActivitiesProgressPresenter"
         android:label="Hola Usuario"
-        tools:layout="@layout/fragment_tareas">
+        tools:layout="@layout/activities_view">
 
         <action
             android:id="@+id/action_FirstFragment_to_SecondFragment"
@@ -20,9 +20,9 @@
     </fragment>
     <fragment
         android:id="@+id/SecondFragment"
-        android:name="com.dantefx.starcom.VerTareasFragment"
+        android:name="com.dantefx.starcom.ActivitiesListPresenter"
         android:label="Lista De Tareas"
-        tools:layout="@layout/fragment_ver_tareas">
+        tools:layout="@layout/activities_list_view">
 
         <action
             android:id="@+id/action_SecondFragment_to_FirstFragment"
@@ -36,12 +36,12 @@
     </fragment>
     <fragment
         android:id="@+id/agregarTareaFragment"
-        android:name="com.dantefx.starcom.AgregarTareaFragment"
+        android:name="com.dantefx.starcom.CreateActivityPresenter"
         android:label="Crear una nueva tarea"
-        tools:layout="@layout/fragment_agregar_tarea" />
+        tools:layout="@layout/create_activity_view" />
     <fragment
         android:id="@+id/editarTareaFragment"
-        android:name="com.dantefx.starcom.EditarTareaFragment"
+        android:name="com.dantefx.starcom.EditActivityPresenter"
         android:label="Editar una tarea"
-        tools:layout="@layout/fragment_editar_tarea" />
+        tools:layout="@layout/edit_activity_view" />
 </navigation>
