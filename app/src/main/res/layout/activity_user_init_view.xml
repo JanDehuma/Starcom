@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#1c2120"
+    tools:context=".UserInitView">
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_marginVertical="100dp"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Bienvenido Por favor ingresa un nombre"
+        android:textColor="#F3F3F3"
+        android:textSize="34sp"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="143dp"
+        android:gravity="center_horizontal"/>
+
+    <EditText
+        android:id="@+id/nameEdit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_marginTop="200dp"
+        android:background="#2683D5"
+        android:gravity="center"
+        android:hint="Ingresa el nombre"
+        android:textColorHint="#F3F3F3"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:autofillHints="" />
+
+    <ImageButton
+        android:id="@+id/buttonGuardarNombre"
+        android:layout_width="80dp"
+        android:layout_height="98dp"
+        android:layout_marginTop="500dp"
+        android:background="#00FFFFF0"
+        android:src="@drawable/save32"
+        android:text="Button"
+        app:icon="@drawable/save32"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@drawable/save32"
+        android:contentDescription="TODO" />
+</androidx.constraintlayout.widget.ConstraintLayout>
