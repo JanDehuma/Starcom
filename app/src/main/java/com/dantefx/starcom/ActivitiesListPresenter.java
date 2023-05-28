@@ -50,11 +50,6 @@ public class ActivitiesListPresenter extends Fragment {
         });
     }
 
-    private void actualizarTabla() {
-        Cursor nuevoCursor = administra.obtenerTareas();
-        adaptador.swapCursor(nuevoCursor);
-    }
-
     @Override
     public void onDestroyView() {
         super.onDestroyView();

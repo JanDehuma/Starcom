@@ -43,21 +43,4 @@ public class BDManager extends SQLiteOpenHelper {
     }
 
 
-
-
-
-    public Cursor obtenerTodasLasTareas() {
-        SQLiteDatabase db = this.getReadableDatabase();
-        String[] columnas = {
-                "id",
-                "nombre",
-                "descripcion",
-                "estado",
-                "fechaEntrega"
-        };
-        Cursor cursor = db.query(TABLE_TAREA, columnas, null, null, null, null, null);
-        return cursor;
-    }
-
-
 }
