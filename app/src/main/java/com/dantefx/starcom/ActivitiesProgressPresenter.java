@@ -1,13 +1,10 @@
 package com.dantefx.starcom;
 
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import androidx.annotation.NonNull;
@@ -15,30 +12,25 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
 import android.widget.SimpleCursorAdapter;
-import android.widget.Spinner;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.Date;
 
-import com.dantefx.db.DBHandler;
-import com.dantefx.db.DBHelper;
-import com.dantefx.db.DBTareas;
-import com.dantefx.starcom.databinding.FragmentTareasBinding;
-public class TareasFragment extends Fragment {
+import com.dantefx.db.Administra;
+import com.dantefx.starcom.databinding.ActivitiesViewBinding;
+public class ActivitiesProgressPresenter extends Fragment {
 
-    private FragmentTareasBinding binding;
-    private DBTareas dbTareas;
+    private ActivitiesViewBinding binding;
+    private Administra administra;
     private SimpleCursorAdapter adaptador;
     @Override
     public View onCreateView(
             LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState
     ) {
-        DBHandler dbHelper = new DBHandler(this.getContext());
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
 
-        binding = FragmentTareasBinding.inflate(inflater, container, false);
+
+        binding = ActivitiesViewBinding.inflate(inflater, container, false);
 
         TextView dateView = binding.fecha;
         setDate(dateView);
@@ -54,20 +46,20 @@ public class TareasFragment extends Fragment {
         binding.buttonVerTareas.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                NavHostFragment.findNavController(TareasFragment.this)
+                NavHostFragment.findNavController(ActivitiesProgressPresenter.this)
                         .navigate(R.id.action_FirstFragment_to_SecondFragment);
             }
         });
         binding.buttonAgregarTareas.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                NavHostFragment.findNavController(TareasFragment.this)
+                NavHostFragment.findNavController(ActivitiesProgressPresenter.this)
                         .navigate(R.id.action_FirstFragment_to_agregarTareaFragment);
             }
         });
 
-        dbTareas = new DBTareas(getContext());
-        Cursor cursor = dbTareas.obtenerNombreTarea();
+        administra = new Administra(getContext());
+        Cursor cursor = administra.obtenerNombreTarea();
 
         //Se debe mostrar solo el nombre pero me aparecen lso nombres de las demas columnas
         String[] desde = {"nombre"};

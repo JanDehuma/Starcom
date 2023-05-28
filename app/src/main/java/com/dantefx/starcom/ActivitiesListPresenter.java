@@ -5,9 +5,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.SimpleCursorAdapter;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -15,21 +12,21 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.dantefx.db.DBTareas;
-import com.dantefx.starcom.databinding.FragmentVerTareasBinding;
+import com.dantefx.db.Administra;
+import com.dantefx.starcom.databinding.ActivitiesListViewBinding;
 
-public class VerTareasFragment extends Fragment {
+public class ActivitiesListPresenter extends Fragment {
 
-    private FragmentVerTareasBinding binding;
-    private DBTareas dbTareas;
+    private ActivitiesListViewBinding binding;
+    private Administra administra;
     private RecyclerView recyclerView;
     private TareasAdapter adaptador;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        binding = FragmentVerTareasBinding.inflate(inflater, container, false);
-        dbTareas = new DBTareas(getContext());
-        Cursor cursor = dbTareas.obtenerTareas();
+        binding = ActivitiesListViewBinding.inflate(inflater, container, false);
+        administra = new Administra(getContext());
+        Cursor cursor = administra.obtenerTareas();
 
 
         recyclerView = binding.rvTareas;
@@ -47,14 +44,14 @@ public class VerTareasFragment extends Fragment {
         binding.imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                NavHostFragment.findNavController(VerTareasFragment.this)
+                NavHostFragment.findNavController(ActivitiesListPresenter.this)
                         .navigate(R.id.action_SecondFragment_to_agregarTareaFragment);
             }
         });
     }
 
     private void actualizarTabla() {
-        Cursor nuevoCursor = dbTareas.obtenerTareas();
+        Cursor nuevoCursor = administra.obtenerTareas();
         adaptador.swapCursor(nuevoCursor);
     }
 

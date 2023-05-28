@@ -5,19 +5,13 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.widget.ListView;
-import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 
-import com.dantefx.starcom.AgregarTareaFragment;
-import com.dantefx.starcom.VerTareasFragment;
-
-public class DBTareas extends DBHelper {
+public class Administra extends BDManager {
     Context context;
 
-    public DBTareas(@Nullable Context context) {
+    public Administra(@Nullable Context context) {
         super(context);
         this.context = context;
     }
@@ -25,8 +19,8 @@ public class DBTareas extends DBHelper {
     public long insertarTarea(String nombre, String descripcion, int estado , String prioridad, String fechaEntrega){
         long id = 0;
         try {
-            DBHelper dbHelper = new DBHelper(context.getApplicationContext());
-            SQLiteDatabase db = dbHelper.getWritableDatabase();
+            BDManager BDManager = new BDManager(context.getApplicationContext());
+            SQLiteDatabase db = BDManager.getWritableDatabase();
 
             ContentValues values = new ContentValues();
             if(nombre != null && descripcion !=  null && prioridad != null && fechaEntrega != null) {
