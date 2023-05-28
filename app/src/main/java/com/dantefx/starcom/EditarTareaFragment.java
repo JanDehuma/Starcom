@@ -41,7 +41,7 @@ public class EditarTareaFragment extends Fragment {
 
 
     private int position1;
-    private static final String ARG = "POS";
+    public static final String ARG = "POS";
 
     private Bundle bundle = new Bundle();
 

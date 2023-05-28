@@ -1,6 +1,11 @@
 package com.dantefx.starcom;
 
+<<<<<<< Updated upstream
 import android.app.Activity;
+=======
+import static com.dantefx.starcom.EditActivityPresenter.ARG;
+
+>>>>>>> Stashed changes
 import android.content.Context;
 import android.database.Cursor;
 import android.graphics.drawable.Drawable;
@@ -94,11 +99,21 @@ public class TareasAdapter extends RecyclerView.Adapter<TareasAdapter.ViewHolder
                 }
             });
 
-            holder.buttonEditar.setOnClickListener( view -> {
-                Bundle bundle = new Bundle();
-                bundle.putInt("POS", holder.getAdapterPosition());
-                Navigation.findNavController(view).navigate(R.id.editarTareaFragment,bundle);
+            holder.buttonEditar.setOnClickListener(view -> {
+                int position1 = holder.getAdapterPosition(); // Obtén la posición del registro actual
+                if (position1 != RecyclerView.NO_POSITION) {
+                    Cursor cursor = mCursor; // Obtén el cursor actual
+                    if (cursor != null && cursor.moveToPosition(position1)) {
+                        int id = cursor.getInt(cursor.getColumnIndexOrThrow("_id")); // Obtén el ID del registro actual
+
+                        Bundle bundle = new Bundle();
+                        bundle.putInt(ARG, id); // Pasa el ID en lugar de la posición al fragmento
+
+                        Navigation.findNavController(view).navigate(R.id.editarTareaFragment, bundle);
+                    }
+                }
             });
+
 
 
         }
