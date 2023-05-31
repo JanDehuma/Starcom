@@ -42,7 +42,7 @@ public class EditActivityPresenter extends Fragment {
 
     private TareasAdapter tareasAdapter;
 
-    public EditarTareaFragment(){}
+    public EditActivityPresenter(){}
 
     public static EditActivityPresenter newInstance (Integer position1){
         EditActivityPresenter fragment = new EditActivityPresenter();
@@ -77,7 +77,7 @@ public class EditActivityPresenter extends Fragment {
 
 
                 // Obtener el ID del registro que se va a actualizar
-                DBTareas bdTareas = new DBTareas(getContext());
+                Administra bdTareas = new Administra(getContext());
 
 
                 boolean actualizacionExitosa = bdTareas.actualizarTarea(position1, nombre, descripcion, prioridad, fechaEntrega);

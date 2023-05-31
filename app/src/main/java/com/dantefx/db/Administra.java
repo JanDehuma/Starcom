@@ -16,19 +16,20 @@ public class Administra extends BDManager {
         this.context = context;
     }
 
-    public long insertarTarea(String nombre, String descripcion, int estado , String prioridad, String fechaEntrega){
+    public long insertarTarea(String nombre, String descripcion, int estado , String prioridad, String fechaEntrega, String fechaInicio){
         long id = 0;
         try {
             BDManager BDManager = new BDManager(context.getApplicationContext());
             SQLiteDatabase db = BDManager.getWritableDatabase();
 
             ContentValues values = new ContentValues();
-            if(nombre != null && descripcion !=  null && prioridad != null && fechaEntrega != null) {
+            if (nombre != null && descripcion != null && prioridad != null && fechaEntrega != null && fechaInicio != null) {
                 values.put("nombre", nombre);
                 values.put("descripcion", descripcion);
                 values.put("estado", estado);
                 values.put("prioridad", prioridad);
                 values.put("fechaEntrega", fechaEntrega);
+                values.put("fechaInicio", fechaInicio); // Agrega la fecha de inicio
                 id = db.insert(TABLE_TAREA, null, values);
             }
         }catch (Exception ex){
@@ -70,7 +71,7 @@ public class Administra extends BDManager {
     }
 
     public boolean actualizarTarea(int id, String nombre, String descripcion, String prioridad, String fechaEntrega) {
-        DBHelper dbHelper = new DBHelper(context.getApplicationContext());
+        BDManager dbHelper = new BDManager(context.getApplicationContext());
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
         try {

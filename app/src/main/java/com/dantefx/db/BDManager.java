@@ -9,7 +9,7 @@ import androidx.annotation.Nullable;
 
 public class BDManager extends SQLiteOpenHelper {
 
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
     private static final String DATABASE_NOMBRE = "starcom.db";
     public static final String TABLE_USUARIO = "USUARIO";
     public static final String TABLE_TAREA = "TAREA";
@@ -35,29 +35,16 @@ public class BDManager extends SQLiteOpenHelper {
     }
 
     @Override
-    public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
+    public void onUpgrade(SQLiteDatabase sqLiteDatabase, int oldVersion, int newVersion) {
+        if (oldVersion < 2) {
+            // Agregar los nuevos campos a la tabla de tareas
+            sqLiteDatabase.execSQL("ALTER TABLE " + TABLE_TAREA + " ADD COLUMN fechaInicio TEXT");
+            sqLiteDatabase.execSQL("ALTER TABLE " + TABLE_TAREA + " ADD COLUMN fechaFin TEXT");
+        }
 
-        sqLiteDatabase.execSQL("DROP TABLE " + TABLE_USUARIO );
-        sqLiteDatabase.execSQL("DROP TABLE " + TABLE_TAREA );
-        onCreate(sqLiteDatabase);
+        // Eliminar la tabla de usuarios si existe
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_USUARIO);
+
     }
-
-
-
-
-
-    public Cursor obtenerTodasLasTareas() {
-        SQLiteDatabase db = this.getReadableDatabase();
-        String[] columnas = {
-                "id",
-                "nombre",
-                "descripcion",
-                "estado",
-                "fechaEntrega"
-        };
-        Cursor cursor = db.query(TABLE_TAREA, columnas, null, null, null, null, null);
-        return cursor;
-    }
-
 
 }
