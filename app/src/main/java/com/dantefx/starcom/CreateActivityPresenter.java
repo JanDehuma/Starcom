@@ -74,7 +74,7 @@ public class CreateActivityPresenter extends Fragment {
                     Cursor nuevoCursor = bdTareas.obtenerTareas();
 
                     // Actualizar el adaptador con el nuevo Cursor
-                    //tareasAdapter.swapCursor(nuevoCursor);
+             //       tareasAdapter.swapCursor(nuevoCursor);
                 } else {
                     Toast.makeText(getContext(), "ERROR AL GUARDAR EL REGISTRO", Toast.LENGTH_LONG).show();
                 }

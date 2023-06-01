@@ -11,7 +11,7 @@ public class BDManager extends SQLiteOpenHelper {
 
     private static final int DATABASE_VERSION = 2;
     private static final String DATABASE_NOMBRE = "starcom.db";
-    public static final String TABLE_USUARIO = "USUARIO";
+
     public static final String TABLE_TAREA = "TAREA";
 
     public BDManager(@Nullable Context context) {
@@ -20,8 +20,6 @@ public class BDManager extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("CREATE TABLE " + TABLE_USUARIO + "(" +
-                "nombre TEXT NOT NULL)");
 
         db.execSQL("CREATE TABLE " + TABLE_TAREA + "(" +
                 "id INTEGER PRIMARY KEY AUTOINCREMENT ," +
@@ -45,6 +43,9 @@ public class BDManager extends SQLiteOpenHelper {
         // Eliminar la tabla de usuarios si existe
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_USUARIO);
 
+        sqLiteDatabase.execSQL("DROP TABLE " + TABLE_TAREA );
+        onCreate(sqLiteDatabase);
     }
+
 
 }

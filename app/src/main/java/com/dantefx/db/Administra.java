@@ -58,6 +58,10 @@ public class Administra extends BDManager {
         Cursor cursor = db.query(TABLE_TAREA, columnas, null, null, null, null, null);
         return cursor;
     }
+    public void delete(int id) {
+        SQLiteDatabase db = getWritableDatabase();
+        db.execSQL("delete from "+TABLE_TAREA+" where id='"+id+"'");
+    }
     public void borrarTarea(int id){
         SQLiteDatabase db = getWritableDatabase();
         String whereClause = "id=?";
@@ -70,11 +74,11 @@ public class Administra extends BDManager {
         db.delete(TABLE_TAREA, null, null);
     }
 
-    public boolean actualizarTarea(int id, String nombre, String descripcion, String prioridad, String fechaEntrega) {
-        BDManager dbHelper = new BDManager(context.getApplicationContext());
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
-
+    public boolean actualizarTarea(int id, String nombre, String descripcion,  String prioridad, String fechaEntrega) {
         try {
+            BDManager BDManager = new BDManager(context.getApplicationContext());
+            SQLiteDatabase db = BDManager.getWritableDatabase();
+
             ContentValues values = new ContentValues();
             values.put("nombre", nombre);
             values.put("descripcion", descripcion);
@@ -85,16 +89,12 @@ public class Administra extends BDManager {
             String[] whereArgs = new String[]{String.valueOf(id)};
 
             int numRowsUpdated = db.update(TABLE_TAREA, values, whereClause, whereArgs);
-
             return numRowsUpdated > 0;
         } catch (Exception ex) {
             ex.printStackTrace();
-            return false;
-        } finally {
-            db.close();
         }
+        return false;
     }
-
 
     public long obtenerIdRegistroActual(ListView listView) {
         int position = listView.getCheckedItemPosition();

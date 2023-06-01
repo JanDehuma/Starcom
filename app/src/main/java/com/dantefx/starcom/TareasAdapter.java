@@ -1,8 +1,5 @@
 package com.dantefx.starcom;
 
-
-import android.app.Activity;
-
 import static com.dantefx.starcom.EditActivityPresenter.ARG;
 
 import android.content.Context;
@@ -36,6 +33,8 @@ public class TareasAdapter extends RecyclerView.Adapter<TareasAdapter.ViewHolder
         public TextView tvPrioridad;
         public TextView tvFechaEntrega;
         public ImageButton buttonEditar;
+
+        
         public ImageButton buttonEliminar;
 
 
@@ -80,12 +79,15 @@ public class TareasAdapter extends RecyclerView.Adapter<TareasAdapter.ViewHolder
             holder.tvPrioridad.setText(prioridad);
             holder.tvFechaEntrega.setText(fechaEntrega);
 
-            holder.buttonEliminar.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View v) {
-                    Administra bdTareas = new Administra(context);
-                    bdTareas.borrarTarea(holder.getAdapterPosition());
-                    Toast.makeText(context, "REGISTRO BORRADO " + holder.getAdapterPosition(), Toast.LENGTH_SHORT).show();
-                    notifyDataSetChanged(); // Notificar cambio en el adaptador después de eliminar un registro
+            holder.buttonEliminar.setOnClickListener(view -> {
+                int position1 = holder.getAdapterPosition();
+                if (position1 != RecyclerView.NO_POSITION) {
+                    Cursor cursor = mCursor;
+                    if (cursor != null && cursor.moveToPosition(position1)) {
+                        int id = cursor.getInt(cursor.getColumnIndexOrThrow("_id"));
+                        Administra bdTareas = new Administra(context);
+                        bdTareas.delete(id);
+                    }
                 }
             });
 
