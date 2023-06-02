@@ -58,6 +58,7 @@ public class CreateActivityPresenter extends Fragment {
                 SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
                 String fechaInicio = dateFormat.format(calendar.getTime());
 
+
                 // Verificar que los campos no sean nulos o vacíos
                 if (nombre.isEmpty() || descripcion.isEmpty() || prioridad.isEmpty() || fechaEntrega.isEmpty()) {
                     Toast.makeText(getContext(), "Por favor, complete todos los campos", Toast.LENGTH_SHORT).show();
@@ -74,7 +75,7 @@ public class CreateActivityPresenter extends Fragment {
                     Cursor nuevoCursor = bdTareas.obtenerTareas();
 
                     // Actualizar el adaptador con el nuevo Cursor
-             //       tareasAdapter.swapCursor(nuevoCursor);
+                    //tareasAdapter.swapCursor(nuevoCursor);
                 } else {
                     Toast.makeText(getContext(), "ERROR AL GUARDAR EL REGISTRO", Toast.LENGTH_LONG).show();
                 }
