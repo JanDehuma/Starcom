@@ -67,11 +67,18 @@ public class TareasProgressAdapter extends RecyclerView.Adapter<TareasProgressAd
 
             holder.tvNombre.setText(nombre);
 
+            // Obtener el progreso de la base de datos
+            int progreso = cursor.getInt(cursor.getColumnIndexOrThrow("progreso"));
+
+            // Establecer el progreso en la barra de progreso
+            holder.progreso.setProgress(progreso, true);
+
         }
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(context,
                 R.array.etapa, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         holder.etapa.setAdapter(adapter);
+        holder.etapa.setTag(holder);
         holder.etapa.setOnItemSelectedListener(this);
 
     }
@@ -116,7 +123,22 @@ public class TareasProgressAdapter extends RecyclerView.Adapter<TareasProgressAd
     @Override
     public void onItemSelected(AdapterView<?> parent, View v, int pos, long id) {
         ViewHolder holder = (ViewHolder) parent.getTag();
-        progressChange(pos,new ViewHolder(v.getRootView()));
+        progressChange(pos, holder);
+
+        // Obtener el ID de la tarea actual
+        int idTarea = cursor.getInt(cursor.getColumnIndexOrThrow("id"));
+
+        // Calcular el progreso en función de las etapas
+        int progreso = calcularProgreso(pos);
+
+        // Actualizar el campo de progreso en la tabla "tareas" en la base de datos
+        ContentValues progresoValues = new ContentValues();
+        progresoValues.put("progreso", progreso);
+
+        String whereClause = "id=?";
+        String[] whereArgs = new String[]{String.valueOf(idTarea)};
+        SQLiteDatabase db = getWritableDatabase(context);
+        db.update("TAREA", progresoValues, whereClause, whereArgs);
 
         if (pos == 3) {
             // La tarea ha llegado a la etapa de "Cierre"
@@ -125,10 +147,6 @@ public class TareasProgressAdapter extends RecyclerView.Adapter<TareasProgressAd
             // Actualizar la columna "fechaFin" en la base de datos
             ContentValues values = new ContentValues();
             values.put("fechaFin", fechaActual);
-            int idTarea = cursor.getInt(cursor.getColumnIndexOrThrow("id"));
-            String whereClause = "id=?";
-            String[] whereArgs = new String[]{String.valueOf(idTarea)};
-            SQLiteDatabase db = getWritableDatabase(context);
             db.update("TAREA", values, whereClause, whereArgs);
 
             String nombre = cursor.getString(cursor.getColumnIndexOrThrow("nombre"));
@@ -141,6 +159,27 @@ public class TareasProgressAdapter extends RecyclerView.Adapter<TareasProgressAd
             Toast.makeText(context, mensaje, Toast.LENGTH_SHORT).show();
         }
     }
+
+
+    private int calcularProgreso(int pos) {
+        int progreso = 0;
+        switch (pos) {
+            case 0:
+                progreso = 25;
+                break;
+            case 1:
+                progreso = 50;
+                break;
+            case 2:
+                progreso = 75;
+                break;
+            case 3:
+                progreso = 100;
+                break;
+        }
+        return progreso;
+    }
+
 
     private String obtenerFechaActual() {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
@@ -165,3 +204,4 @@ public class TareasProgressAdapter extends RecyclerView.Adapter<TareasProgressAd
     }
 
 }
+
