@@ -75,7 +75,13 @@ public class TareasAdapter extends RecyclerView.Adapter<TareasAdapter.ViewHolder
             holder.tvNombre.setText(nombre);
             holder.tvDescripcion.setText(descripcion);
 
-            holder.tvEstado.setChecked(false);
+            holder.tvEstado.setClickable(false);
+
+            if(estado == 0){
+                holder.tvEstado.setChecked(false);
+            }else {
+                holder.tvEstado.setChecked(true);
+            }
             holder.tvPrioridad.setText(prioridad);
             holder.tvFechaEntrega.setText(fechaEntrega);
 
@@ -86,7 +92,7 @@ public class TareasAdapter extends RecyclerView.Adapter<TareasAdapter.ViewHolder
                     if (cursor != null && cursor.moveToPosition(position1)) {
                         int id = cursor.getInt(cursor.getColumnIndexOrThrow("_id"));
                         Administra bdTareas = new Administra(context);
-                        bdTareas.delete(id);
+                        bdTareas.borrarTarea(id);
                     }
                 }
             });

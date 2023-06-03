@@ -147,7 +147,9 @@ public class TareasProgressAdapter extends RecyclerView.Adapter<TareasProgressAd
             // Actualizar la columna "fechaFin" en la base de datos
             ContentValues values = new ContentValues();
             values.put("fechaFin", fechaActual);
+            values.put("estado", 1);
             db.update("TAREA", values, whereClause, whereArgs);
+
 
             String nombre = cursor.getString(cursor.getColumnIndexOrThrow("nombre"));
             String fechaInicio = cursor.getString(cursor.getColumnIndexOrThrow("fechaInicio"));
