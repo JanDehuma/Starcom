@@ -159,6 +159,12 @@ public class TareasProgressAdapter extends RecyclerView.Adapter<TareasProgressAd
             // Mostrar un mensaje con el tiempo transcurrido en días
             String mensaje = "La tarea '" + nombre + "' ha sido completada en " + tiempoTranscurrido + " días.";
             Toast.makeText(context, mensaje, Toast.LENGTH_SHORT).show();
+
+        }else {
+            ContentValues values = new ContentValues();
+            values.put("progreso", progreso);
+
+            db.update("TAREA", progresoValues, whereClause, whereArgs);
         }
     }
 
@@ -206,4 +212,3 @@ public class TareasProgressAdapter extends RecyclerView.Adapter<TareasProgressAd
     }
 
 }
-

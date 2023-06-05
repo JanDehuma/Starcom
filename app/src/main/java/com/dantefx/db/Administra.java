@@ -1,12 +1,22 @@
 package com.dantefx.db;
 
+import android.app.AlarmManager;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Build;
 import android.widget.ListView;
 
 import androidx.annotation.Nullable;
+import androidx.core.app.NotificationCompat;
+
+import com.dantefx.starcom.CreateActivityPresenter;
+import com.dantefx.starcom.R;
 
 public class Administra extends BDManager {
     Context context;
@@ -16,7 +26,7 @@ public class Administra extends BDManager {
         this.context = context;
     }
 
-    public long insertarTarea(String nombre, String descripcion, int estado , String prioridad, String fechaEntrega, String fechaInicio){
+    public long insertarTarea(String nombre, String descripcion, int estado, String prioridad, String fechaEntrega, String fechaInicio, int recordatorio) {
         long id = 0;
         try {
             BDManager BDManager = new BDManager(context.getApplicationContext());
@@ -32,11 +42,54 @@ public class Administra extends BDManager {
                 values.put("fechaInicio", fechaInicio); // Agrega la fecha de inicio
                 id = db.insert(TABLE_TAREA, null, values);
             }
-        }catch (Exception ex){
+
+            // Crear la notificación con el tiempo de recordatorio
+            crearNotificacion(id, nombre, String.valueOf(recordatorio));
+
+        } catch (Exception ex) {
             ex.toString();
         }
         return id;
     }
+
+    private void crearNotificacion(long tareaId, String nombreTarea, String recordatorio) {
+        // Definir el identificador del canal de notificación
+        String CHANNEL_ID = "my_channel_id";
+
+        // Obtener el tiempo de recordatorio en milisegundos (suponiendo que está en minutos)
+        long tiempoRecordatorio = Long.parseLong(recordatorio) * 60 * 1000;
+
+        // Crear una intención para la notificación
+        Intent intent = new Intent(context, CreateActivityPresenter.class);
+        intent.putExtra("tarea_id", tareaId);
+        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        // Crear un canal de notificación (solo es necesario hacerlo una vez)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence channelName = "My Channel";
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, channelName, importance);
+            NotificationManager notificationManager = context.getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
+
+        // Construir la notificación
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(context, CHANNEL_ID)
+                .setContentTitle("Recordatorio de tarea")
+                .setContentText("La tarea '" + nombreTarea + "' está pendiente")
+                //.setSmallIcon(R.drawable.ic_notification)
+                .setContentIntent(pendingIntent)
+                .setAutoCancel(true);
+
+        // Programar la notificación para el tiempo de recordatorio
+        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        alarmManager.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + tiempoRecordatorio, pendingIntent);
+
+        // Mostrar la notificación
+        NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager.notify((int) tareaId, builder.build());
+    }
+
 
     public Cursor obtenerTareas() {
         SQLiteDatabase db = getReadableDatabase();
@@ -47,7 +100,7 @@ public class Administra extends BDManager {
 
     public Cursor obtenerNombreTarea(){
         SQLiteDatabase db = getReadableDatabase();
-        String[] columnas = {"id", "nombre", "fechaInicio", "fechaFin"};
+        String[] columnas = {"id", "nombre", "fechaInicio", "fechaFin", "progreso"};
         Cursor cursor = db.query(TABLE_TAREA, columnas, null, null, null, null, null);
         return cursor;
     }
