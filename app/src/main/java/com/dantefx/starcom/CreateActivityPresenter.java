@@ -27,6 +27,7 @@ import android.widget.Toast;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
+import java.util.Random;
 
 import android.widget.TextView;
 
@@ -76,7 +77,7 @@ public class CreateActivityPresenter extends Fragment {
                 }
 
                 Administra bdTareas = new Administra(getContext());
-                long id = bdTareas.insertarTarea(nombre, descripcion, estado, prioridad, fechaEntrega, fechaInicio, recordatorio);
+                  long id = bdTareas.insertarTarea(nombre, descripcion, estado, prioridad, fechaEntrega, fechaInicio, recordatorio);
 
                 if (id > 0) {
                     Toast.makeText(getContext(), "REGISTRO GUARDADO", Toast.LENGTH_SHORT).show();
@@ -129,8 +130,13 @@ public class CreateActivityPresenter extends Fragment {
         alarmManager.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + tiempoRecordatorio, pendingIntent);
 
         // Mostrar la notificación
+        Random random = new Random();
+        int id = random.nextInt(9999-1000)+1000;
+
         NotificationManager notificationManager = (NotificationManager) getContext().getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManager.notify((int) tareaId, builder.build());
+        assert notificationManager != null;
+        notificationManager.notify(id,builder.build());
+
     }
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
